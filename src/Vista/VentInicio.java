@@ -12,10 +12,16 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -44,7 +50,30 @@ public class VentInicio  extends JFrame implements ActionListener  {
         // tabla dblinks///
         
          ta= new JTable();
-
+ta.addMouseListener(new MouseAdapter() 
+        {
+            
+            
+            public void mouseClicked(MouseEvent e)
+            {
+                if(e.getClickCount()==1)
+                {
+                   int row= ta.getSelectedRow();
+                    int colum=ta.getSelectedColumn();
+                    
+                  if(colum ==1)
+                {
+                    for(int i=0;i<ta.getRowCount();i++)
+                    {
+                       if(i!=row && ta.getValueAt(i,1).toString()=="true")
+                        {
+                            ta.setValueAt(false, i, 1);
+                        }
+                    }
+                }
+                }
+           }
+        });
         JScrollPane desplazamientoTab = new JScrollPane(
                   ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                   ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -106,6 +135,33 @@ public class VentInicio  extends JFrame implements ActionListener  {
         {
             this.dispose();
             gestor.AgregarServer();
+        }
+        if(e.getActionCommand().equals("eliminar"))
+        {
+            for(int i=0;i<ta.getRowCount();i++)
+                    {
+                       if(ta.getValueAt(i,1).toString()=="true")
+                        {
+                           if(gestor.eliminardblink(ta.getValueAt(i, 0).toString()))
+                           {
+                                    
+                               try {
+                                   JOptionPane.showMessageDialog(null, "Data base link eliminado correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
+                                   this.dispose();
+                                   gestor.atras();
+                               } catch (InterruptedException ex) {
+                                   Logger.getLogger(VentInicio.class.getName()).log(Level.SEVERE, null, ex);
+                               } catch (SQLException ex) {
+                                   Logger.getLogger(VentInicio.class.getName()).log(Level.SEVERE, null, ex);
+                               }
+                           }
+                           else
+                           {
+                                   JOptionPane.showMessageDialog(null, "Error al eliminar el database link ", "Error", JOptionPane.ERROR_MESSAGE);
+            
+                           }
+                        }
+                    }
         }
         
     }

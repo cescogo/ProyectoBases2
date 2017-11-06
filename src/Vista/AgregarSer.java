@@ -116,7 +116,7 @@ public class AgregarSer extends JFrame implements ActionListener {
             }
             else
             {
-                this.dispose();
+               
                 limpiar();
                 JOptionPane.showMessageDialog(null, "Data base link creado correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
             }

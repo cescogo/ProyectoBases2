@@ -155,6 +155,28 @@ public class Conexion {
         return vec;
         
     }
+    
+    public boolean eliminarDBLink(String name)
+    {
+        Statement stm = null;
+        
+        try {   
+            stm = conexion.createStatement();
+            String st="Drop DATABASE LINK "+name;
+            stm.execute(st);
+
+         stm.close();
+         return true;
+   }catch ( SQLException e ) {
+       System.out.println(e.getMessage());
+         return false;
+         
+      }catch (Exception e)
+      {
+          System.out.println(e.getMessage());
+         return false;
+      }
+    }
 
     /*Devuelve columna*/
     public static void getColumnNames(ResultSet rs) throws SQLException {

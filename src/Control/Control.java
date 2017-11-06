@@ -71,4 +71,9 @@ public class Control {
     {
         return model.getdblinks();
     }
+    
+    public boolean eliminardblink(String name)
+    {
+        return model.eliminarDBLink(name);
+    }
 }
