@@ -103,40 +103,27 @@ public class Conexion {
         return vec;
     }
 
-    // se obtienen las tablas de cada tablespace
-    // se obtienen las tablas de la base de datos
-// meter aqui el query de contar los indices de una tabla
-//    public  ArrayList<Table> getTable(String tablespace) throws InterruptedException, SQLException {
-//        ArrayList<Table> vec = new ArrayList<>();
-//        Statement stm = null;
-//        ResultSet rs;
-//        String a, b;
-//       
-//        
-//      
-//        try {
-//            stm = conexion.createStatement();
-//            rs = stm.executeQuery("select TABLE_NAME,OWNER from all_tables where tablespace_name = '" + tablespace + "'");
-//            getColumnNames(rs);
-//            while (rs.next()) {
-//                a = rs.getString("TABLE_NAME");//Aqui deberia jalar el nombre de la columna               
-//                b = rs.getString("OWNER");
-//                vec.add(new Table(a, b));
-//            }
-//           
-//            stm.close();
-//        } catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
-//        } finally {
-//            if (stm != null) {
-//                stm.close();
-//            }
-//        }
-//
-//        return vec;
-//    }
-//
-//   
+    public boolean createDBLINK(DBLINK dblink)
+    {
+         Statement stm = null;
+        try {   stm = conexion.createStatement();
+         stm.addBatch("CREATE DATABASE LINK"+dblink.getName()+"CONNECT TO"+ dblink.getUser()+" IDENTIFIED BY"+ dblink.getPassword()+ "USING'(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST ="+ dblink.getIp()+")(PORT = "+dblink.getPort()+"))(CONNECT_DATA = (SERVICE_NAME = XE)))'" );
+         stm.executeBatch();
+         stm.clearBatch();
+         stm.close();
+         return true;
+   }catch ( SQLException e ) {
+       System.out.println(e.getMessage());
+         return false;
+         
+      }
+    }
+    
+    public ArrayList<DBLINK> getdblinks()
+    {
+        return null;
+        
+    }
 
     /*Devuelve columna*/
     public static void getColumnNames(ResultSet rs) throws SQLException {

@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -104,6 +105,16 @@ public class AgregarSer extends JFrame implements ActionListener {
             } catch (SQLException ex) {
                 Logger.getLogger(AgregarSer.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        else 
+        {
+            boolean aux= gestor.createDBLINK(nombre.getText(), user.getText(),password.getText(),ip.getText(),puerto.getText());
+            
+            if(!aux)
+            {
+                JOptionPane.showMessageDialog(null, "Error al crear el database link ", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+                
         }
     }
     

@@ -40,25 +40,6 @@ public class Control {
         ta = new ArrayList<>();
         tab_graf = new TableSpace();
         sqlite = new SQLiteJDBC();
-
-//         sqlite.conectar();
-//         sqlite.query("drop table TB_SPACES");
-//         sqlite.conectar();
-//         sqlite.query("drop table Hist");
-//         sqlite.conectar();
-//         sqlite.query("drop table HWM");
-//         sqlite.conectar();
-//         sqlite.query("drop table SGA");
-//         sqlite.conectar();
-//         sqlite.query("CREATE TABLE TB_SPACES " + "(fecha TEXT not null,nombre TEXT NOT NULL, MB_TABLAS float not null, usado float NOT NULL,TasaTrans float not null,registros INT NOT NULL)");
-//         sqlite.conectar();
-//         sqlite.query("CREATE TABLE Hist " + "(fecha TEXT not null,nombre TEXT NOT NULL, uso INT not null, porcentaje INT NOT NULL)");
-//         sqlite.conectar();
-//         sqlite.query("CREATE TABLE HWM " + "(nombre TEXT NOT NULL, HWM INT not null)");
-//         sqlite.conectar();
-//         sqlite.query("CREATE TABLE SGA " + "(fecha TEXT not null,hora TEXT NOT NULL,sql TEXT NOT NULL, usuario TEXT NOT NULL, maquina TEXT NOT NULL)");
-//         
-
         fecha = new GregorianCalendar();
        
         
@@ -73,11 +54,7 @@ public class Control {
     
     public void atras() throws InterruptedException, SQLException {
 
-//        tabSpa = null;
-//        ta = null;
-//        tab_graf = null;
-//
-//        ta = model.getSegmentos();
+
         ventIni = new VentInicio(this);
         ventIni.iniciar();
     }
@@ -88,8 +65,8 @@ public class Control {
         agser.iniciar();
     }
     
-//    public ArrayList<Table> getTablas(String tsp) throws InterruptedException, SQLException
-//    {
-//        return model.getTable(tsp);
-//    }
+    public boolean createDBLINK(String name,String user,String password,String ip,String port)
+    {
+        return model.createDBLINK(new DBLINK(name,user,password,ip,port));
+    }
 }
