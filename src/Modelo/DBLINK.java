@@ -23,6 +23,12 @@ public class DBLINK {
     public DBLINK() {
     }
 
+    public DBLINK(String name) {
+        this.name = name;
+       
+    }
+    
+
     public String getName() {
         return name;
     }

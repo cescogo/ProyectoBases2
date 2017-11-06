@@ -119,9 +119,31 @@ public class Conexion {
       }
     }
     
-    public ArrayList<DBLINK> getdblinks()
+    public ArrayList<DBLINK> getdblinks() throws SQLException
     {
-        return null;
+        ArrayList<DBLINK> vec = new ArrayList<>();
+        Statement stm = null;
+        try {
+            stm = conexion.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT DB_LINK, USERNAME ,HOST FROM DBA_DB_LINKS where USERNAME!=' '");
+
+            getColumnNames(rs);
+            while (rs.next()) {
+
+                //Aqui deberia jalar el nombre de la columna
+                vec.add(new DBLINK(rs.getString("DB_LINK")));
+
+            }
+            stm.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+        }
+
+        return vec;
         
     }
 

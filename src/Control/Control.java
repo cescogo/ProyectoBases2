@@ -21,9 +21,7 @@ public class Control {
 
     private Conexion model;
     
-  
-    private ArrayList<String> tabSpa;
-    private ArrayList<TableSpace> ta;
+    
     private TableSpace tab_graf;
   
     private SQLiteJDBC sqlite;
@@ -36,8 +34,7 @@ public class Control {
         model = new Conexion();
         model.conectar();
         ventIni = new VentInicio(this);
-        tabSpa = new ArrayList<>();
-        ta = new ArrayList<>();
+        
         tab_graf = new TableSpace();
         sqlite = new SQLiteJDBC();
         fecha = new GregorianCalendar();
@@ -46,8 +43,8 @@ public class Control {
     }
 
     public void iniciar() throws InterruptedException, SQLException  {
-         ta = model.getSegmentos();
-         ventIni.iniciar();
+         
+         ventIni.iniciar(getdblink());
 
     }
 
@@ -56,7 +53,7 @@ public class Control {
 
 
         ventIni = new VentInicio(this);
-        ventIni.iniciar();
+        ventIni.iniciar(getdblink());
     }
 
     public void AgregarServer()
@@ -68,5 +65,10 @@ public class Control {
     public boolean createDBLINK(String name,String user,String password,String ip,String port)
     {
         return model.createDBLINK(new DBLINK(name,user,password,ip,port));
+    }
+    
+    public ArrayList<DBLINK> getdblink() throws SQLException
+    {
+        return model.getdblinks();
     }
 }
