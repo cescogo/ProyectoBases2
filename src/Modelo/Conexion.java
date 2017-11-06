@@ -8,6 +8,7 @@ package Modelo;
 import Control.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -106,16 +107,24 @@ public class Conexion {
     public boolean createDBLINK(DBLINK dblink)
     {
          Statement stm = null;
-        try {   stm = conexion.createStatement();
-         stm.addBatch("CREATE DATABASE LINK"+dblink.getName()+"CONNECT TO"+ dblink.getUser()+" IDENTIFIED BY"+ dblink.getPassword()+ "USING'(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST ="+ dblink.getIp()+")(PORT = "+dblink.getPort()+"))(CONNECT_DATA = (SERVICE_NAME = XE)))'" );
-         stm.executeBatch();
-         stm.clearBatch();
+        
+        try {   
+            stm = conexion.createStatement();
+            String st="CREATE DATABASE LINK "+dblink.getName()+" CONNECT TO "+ dblink.getUser()+" IDENTIFIED BY "+ dblink.getPassword()+ " USING'(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST ="+ dblink.getIp()+")(PORT = "+dblink.getPort()+"))(CONNECT_DATA = (SERVICE_NAME = XE)))'";
+            stm.execute(st);
+//         stm.addBatch(st);
+//         stm.executeBatch();
+//         stm.clearBatch();
          stm.close();
          return true;
    }catch ( SQLException e ) {
        System.out.println(e.getMessage());
          return false;
          
+      }catch (Exception e)
+      {
+          System.out.println(e.getMessage());
+         return false;
       }
     }
     

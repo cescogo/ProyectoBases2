@@ -114,8 +114,23 @@ public class AgregarSer extends JFrame implements ActionListener {
             {
                 JOptionPane.showMessageDialog(null, "Error al crear el database link ", "Error", JOptionPane.ERROR_MESSAGE);
             }
+            else
+            {
+                this.dispose();
+                limpiar();
+                JOptionPane.showMessageDialog(null, "Data base link creado correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
+            }
                 
         }
+    }
+    
+    private void limpiar()
+    {
+        nombre.setText("");
+        user.setText("");
+        password.setText("");
+        ip.setText("");
+        puerto.setText("");
     }
     
     
