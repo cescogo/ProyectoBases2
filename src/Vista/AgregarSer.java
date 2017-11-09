@@ -108,8 +108,10 @@ public class AgregarSer extends JFrame implements ActionListener {
         }
         else 
         {
-            boolean aux= gestor.createDBLINK(nombre.getText(), user.getText(),password.getText(),ip.getText(),puerto.getText());
-            
+           
+            if(!blanco())
+            {
+                 boolean aux= gestor.createDBLINK(nombre.getText(), user.getText(),password.getText(),ip.getText(),puerto.getText());
             if(!aux)
             {
                 JOptionPane.showMessageDialog(null, "Error al crear el database link ", "Error", JOptionPane.ERROR_MESSAGE);
@@ -120,6 +122,10 @@ public class AgregarSer extends JFrame implements ActionListener {
                 limpiar();
                 JOptionPane.showMessageDialog(null, "Data base link creado correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
             }
+                
+        }
+            else     JOptionPane.showMessageDialog(null, "Error no se envio el formulario, existe un campo vacio ", "Error", JOptionPane.ERROR_MESSAGE);
+            
                 
         }
     }
@@ -133,5 +139,29 @@ public class AgregarSer extends JFrame implements ActionListener {
         puerto.setText("");
     }
     
+    private boolean blanco()
+    {
+        if(nombre.getText().equals(""))
+        {
+            return true;
+        }
+        else if(user.getText().equals(""))
+        {
+            return true;
+        }
+        else if(password.getText().equals(""))
+        {
+            return true;
+        }
+        else if(ip.getText().equals(""))
+        {
+            return true;
+        }
+        else if(puerto.getText().equals(""))
+        {
+            return true;
+        }
+        else return false;
+    }
     
 }
