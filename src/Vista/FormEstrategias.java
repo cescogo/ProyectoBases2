@@ -72,9 +72,9 @@ private  JComboBox dias,mes,hora,minute,semana;
   private DefaultTableModel model,model_sem;
   private JTable ta,tab_sem;
   private JTextField frecuencia;
-  private  JRadioButton r_par_com,r_par_inc,r_par_incr;
+  private  JRadioButton r_par_com,r_par_inc,r_par_inc1,r_par_acu;
   private JLabel leg_par;
-  
+  private String query;
  
     public FormEstrategias(Control c,String nom)
     {
@@ -91,6 +91,7 @@ private  JComboBox dias,mes,hora,minute,semana;
          me = new DefaultComboBoxModel();
         hor = new DefaultComboBoxModel();
          min = new DefaultComboBoxModel();
+         query="";
     }
     
     public void init(ArrayList<TableSpace> TaSpa) throws InterruptedException
@@ -117,6 +118,7 @@ private  JComboBox dias,mes,hora,minute,semana;
         JRadioButton r_est= new JRadioButton("Frío");
         r_est.addActionListener(this);
         r_est.setActionCommand("frío");
+        r_est.setSelected(true);
         group_est.add(r_est);
         gc.gridx=1;
         pan_job.add(r_est,gc);
@@ -138,6 +140,7 @@ private  JComboBox dias,mes,hora,minute,semana;
         JRadioButton r_tipo= new JRadioButton("Full");
         r_tipo.addActionListener(this);
         r_tipo.setActionCommand("full");
+        r_tipo.setSelected(true);
         group_tipo.add(r_tipo);
         gc.gridx=1;
         pan_job.add(r_tipo,gc);
@@ -163,25 +166,35 @@ private  JComboBox dias,mes,hora,minute,semana;
         r_par_com.addActionListener(this);
         r_par_com.setActionCommand("completo");
         r_par_com.setVisible(false);
+        r_par_com.setSelected(true);
         group_par.add(r_par_com);
         gc.gridx=1;
          pan_job.add(r_par_com,gc);
          
-          r_par_inc= new JRadioButton("Incompleto");
+          r_par_inc= new JRadioButton("Incremental nv.0");
         r_par_inc.addActionListener(this);
-        r_par_inc.setActionCommand("incompleto");
+        r_par_inc.setActionCommand("incremental0");
          r_par_inc.setVisible(false);
         group_par.add(r_par_inc);
         gc.gridx=2;
          pan_job.add(r_par_inc,gc);
          
-            r_par_incr= new JRadioButton("Incremental");
-        r_par_incr.addActionListener(this);
-        r_par_incr.setActionCommand("incremental");
-         r_par_incr.setVisible(false);
-        group_par.add(r_par_incr);
+            r_par_inc1= new JRadioButton("Incremental nv.1");
+        r_par_inc1.addActionListener(this);
+        r_par_inc1.setActionCommand("incremental1");
+         r_par_inc1.setVisible(false);
+        group_par.add(r_par_inc1);
         gc.gridx=3;
-         pan_job.add(r_par_incr,gc);
+         pan_job.add(r_par_inc1,gc);
+         
+         gc.gridx=1;
+         gc.gridy=4;
+             r_par_acu= new JRadioButton("Incremental acumulativo nv.1");
+        r_par_acu.addActionListener(this);
+        r_par_acu.setActionCommand("acumulativo");
+         r_par_acu.setVisible(false);
+        group_par.add(r_par_acu);
+        pan_job.add(r_par_acu,gc);
  
         pan_job.setPreferredSize(new Dimension(600,150));
         pan_job.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)));
@@ -356,7 +369,7 @@ private  JComboBox dias,mes,hora,minute,semana;
       
        JButton aceptar= new JButton("Crear");
          aceptar.addActionListener(this);
-
+         aceptar.setActionCommand("crear");
        panel.add(aceptar,BorderLayout.CENTER); 
        /// agregar a ventana principal////
         gc.insets=new Insets(10,10,10,10);
@@ -404,19 +417,49 @@ private  JComboBox dias,mes,hora,minute,semana;
                     {
                          r_par_com.setVisible(true);
                          r_par_inc.setVisible(true);
-                         r_par_incr.setVisible(true);
+                         r_par_inc1.setVisible(true);
                          leg_par.setVisible(true);
+                         r_par_acu.setVisible(true);
                          pan_Tab.setVisible(true);
+                         
                     }
                 else
                  if(e.getActionCommand().equals("full"))
                     {
                          r_par_com.setVisible(false);
                          r_par_inc.setVisible(false);
-                         r_par_incr.setVisible(false);
+                         r_par_inc1.setVisible(false);
+                         r_par_acu.setVisible(false);
                          leg_par.setVisible(false);
                          pan_Tab.setVisible(false);
+                         query="";
+                         query="backup database";
                     }
+                 else if(e.getActionCommand().equals("completo"))
+                 {
+                      query="";
+                         query="backup full tablespace ";
+                 }
+                 else if(e.getActionCommand().equals("incremental0"))
+                 {
+                     query="";
+                         query="backup incremental level 0 tablespace ";
+                 }
+                 else if(e.getActionCommand().equals("incremental1"))
+                 {
+                         query="";
+                         query="backup incremental level 1 tablespace ";
+                 }
+                 else if(e.getActionCommand().equals("acumulativo"))
+                 {
+                      query="";
+                         query="backup incremental level 1 cumulative tablespace ";
+                 }
+                 else if(e.getActionCommand().equals("crear"))
+                 {
+                     System.out.println("query: "+query);
+                 }
+                
     }
 
 
