@@ -76,4 +76,16 @@ public class Control {
     {
         return model.eliminarDBLink(name);
     }
+    public void ventanaEstrategias(String nombre)
+    {
+        Estrategias est= new Estrategias(this,nombre);
+        est.iniciar();
+        
+    }
+    
+    public void ventFormEstrategias(String nom) throws InterruptedException, SQLException
+    {
+        FormEstrategias fes= new FormEstrategias(this, nom);
+        fes.init(model.getSegmentos());
+    }
 }

@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -33,7 +34,7 @@ import javax.swing.table.DefaultTableModel;
  * @author cesar
  */
 
-public class VentInicio  extends JFrame implements ActionListener  {
+public class VentInicio  extends JFrame implements ActionListener, MouseListener {
     Control gestor;
     private JTable ta;
     private DefaultTableModel model;
@@ -50,30 +51,7 @@ public class VentInicio  extends JFrame implements ActionListener  {
         // tabla dblinks///
         
          ta= new JTable();
-ta.addMouseListener(new MouseAdapter() 
-        {
-            
-            
-            public void mouseClicked(MouseEvent e)
-            {
-                if(e.getClickCount()==1)
-                {
-                   int row= ta.getSelectedRow();
-                    int colum=ta.getSelectedColumn();
-                    
-                  if(colum ==1)
-                {
-                    for(int i=0;i<ta.getRowCount();i++)
-                    {
-                       if(i!=row && ta.getValueAt(i,1).toString()=="true")
-                        {
-                            ta.setValueAt(false, i, 1);
-                        }
-                    }
-                }
-                }
-           }
-        });
+ta.addMouseListener(this);
         JScrollPane desplazamientoTab = new JScrollPane(
                   ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                   ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -123,7 +101,7 @@ ta.addMouseListener(new MouseAdapter()
         // content pane///
         add(pan_dblink,BorderLayout.CENTER);
           add(botones,BorderLayout.SOUTH);
-       setSize(600,600);
+      this.setExtendedState(MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -164,6 +142,52 @@ ta.addMouseListener(new MouseAdapter()
                     }
         }
         
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+      if(e.getClickCount()==1)
+                {
+                   int row= ta.getSelectedRow();
+                    int colum=ta.getSelectedColumn();
+                    
+                  if(colum ==1)
+                {
+                    for(int i=0;i<ta.getRowCount();i++)
+                    {
+                       if(i!=row && ta.getValueAt(i,1).toString()=="true")
+                        {
+                            ta.setValueAt(false, i, 1);
+                        }
+                    }
+                }
+                }
+                if(e.getClickCount()==2)
+                {
+                     int colum=ta.getSelectedColumn();
+                      int row= ta.getSelectedRow();
+                     if(colum!=1)
+                     {
+                         this.dispose();
+                         gestor.ventanaEstrategias(ta.getValueAt(row,0).toString());
+                     }
+                }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
     
 }

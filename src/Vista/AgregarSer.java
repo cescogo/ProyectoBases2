@@ -88,7 +88,7 @@ public class AgregarSer extends JFrame implements ActionListener {
     botones.add(agregar,BorderLayout.CENTER);
           add(principal,BorderLayout.CENTER);
           add(botones,BorderLayout.SOUTH);
-       setSize(600,600);
+      this.setExtendedState(MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
