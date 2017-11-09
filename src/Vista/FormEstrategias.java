@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -40,8 +41,8 @@ import Modelo.*;
 import java.awt.BasicStroke;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.LayoutManager;
-import javafx.scene.paint.Color;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
@@ -51,7 +52,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
+
 
 /**
  *
@@ -182,6 +185,7 @@ private  JComboBox dias,mes,hora,minute,semana;
  
         pan_job.setPreferredSize(new Dimension(600,150));
         pan_job.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)));
+          pan_job.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "opciones de Backup",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14), new Color(213,18,2)));
         
       ////////tablespace//////
         ta= new JTable();
@@ -189,7 +193,7 @@ private  JComboBox dias,mes,hora,minute,semana;
         JScrollPane desplazamientoTab = new JScrollPane(
                   ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                   ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-       desplazamientoTab.setPreferredSize(new Dimension(580,140));
+       desplazamientoTab.setPreferredSize(new Dimension(580,110));
          desplazamientoTab.setViewportView(ta);
          model= new DefaultTableModel()
          {
@@ -222,7 +226,7 @@ private  JComboBox dias,mes,hora,minute,semana;
         pan_Tab.add(desplazamientoTab);
         pan_Tab.setVisible(false);
         pan_Tab.setPreferredSize(new Dimension(600,150));
-        pan_Tab.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)));
+        pan_Tab.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "tablespace para realizarles el Backup",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14),new Color(213,18,2)));
         
         
        ////////// panel fecha////
@@ -292,7 +296,7 @@ private  JComboBox dias,mes,hora,minute,semana;
         pan_fecha.add(minute,gc);
        
         pan_fecha.setPreferredSize(new Dimension(600,300));
-        pan_fecha.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)));
+        pan_fecha.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "fecha y hora que iniciaria el Backup",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14),new Color(213,18,2)));
     
       ///////panel frecuencia/////
               gc.insets=new Insets(0,10,10,10);
@@ -346,7 +350,7 @@ private  JComboBox dias,mes,hora,minute,semana;
    }
            pan_freq.add(scroll_sem,gc);
            pan_freq.setPreferredSize(new Dimension(600,300));
-          pan_freq.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)));
+          pan_freq.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "Periocidad del Backup",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14),new Color(213,18,2)));
        
         /////boton aceptar /////
       
