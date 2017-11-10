@@ -114,6 +114,7 @@ ta.addMouseListener(this);
             this.dispose();
             gestor.AgregarServer();
         }
+        else
         if(e.getActionCommand().equals("eliminar"))
         {
             for(int i=0;i<ta.getRowCount();i++)
@@ -126,7 +127,7 @@ ta.addMouseListener(this);
                                try {
                                    JOptionPane.showMessageDialog(null, "Data base link eliminado correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
                                    this.dispose();
-                                   gestor.atras();
+                                   gestor.atras(1,"inicio");
                                } catch (InterruptedException ex) {
                                    Logger.getLogger(VentInicio.class.getName()).log(Level.SEVERE, null, ex);
                                } catch (SQLException ex) {

@@ -99,7 +99,7 @@ public class AgregarSer extends JFrame implements ActionListener {
         {
             try {
                 this.dispose();
-                gestor.atras();
+                gestor.atras(2,"servidores");
             } catch (InterruptedException ex) {
                 Logger.getLogger(AgregarSer.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {

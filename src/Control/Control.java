@@ -50,11 +50,26 @@ public class Control {
     }
 
     
-    public void atras() throws InterruptedException, SQLException {
+    public void atras(Integer bandera, String nombre) throws InterruptedException, SQLException {    
+        if (bandera.equals(2)) {
+            ventIni = new VentInicio(this);
+            ventIni.iniciar(getdblink());
 
-
-        ventIni = new VentInicio(this);
-        ventIni.iniciar(getdblink());
+        }
+        else if (bandera.equals(3)) {
+            ventIni.iniciar(getdblink());
+                       
+        } else if (bandera.equals(4)) {
+           ventIni.dispose();
+           ventanaEstrategias(nombre);
+           
+        } else if (bandera.equals(5)) {
+           ventIni.dispose();
+           ventanaEstrategias(nombre);
+        }
+        
+        
+        
     }
 
     public void AgregarServer()

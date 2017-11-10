@@ -208,7 +208,7 @@ private  JComboBox dias,mes,hora,minute,semana;
         JScrollPane desplazamientoTab = new JScrollPane(
                   ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                   ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-       desplazamientoTab.setPreferredSize(new Dimension(580,110));
+       desplazamientoTab.setPreferredSize(new Dimension(480,110));
          desplazamientoTab.setViewportView(ta);
          model= new DefaultTableModel()
          {
@@ -245,7 +245,7 @@ private  JComboBox dias,mes,hora,minute,semana;
          
         pan_Tab.add(desplazamientoTab);
         pan_Tab.setVisible(false);
-        pan_Tab.setPreferredSize(new Dimension(600,150));
+        pan_Tab.setPreferredSize(new Dimension(500,150));
         pan_Tab.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "tablespace para realizarles el Backup",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14),new Color(213,18,2)));
         
         
@@ -336,13 +336,13 @@ private  JComboBox dias,mes,hora,minute,semana;
         
         pan_fecha.add(minute,gc);
        
-        pan_fecha.setPreferredSize(new Dimension(600,300));
+        pan_fecha.setPreferredSize(new Dimension(590,300));
         pan_fecha.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "fecha y hora que iniciaria el Backup",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14),new Color(213,18,2)));
     
       ///////panel frecuencia/////
               gc.insets=new Insets(0,10,10,10);
               pan_freq.setLayout(tb);
-      String[] d= new String[]{"lunes","martes","miercoles","jueves","viernes","sabado","domingo"};
+      String[] d= new String[]{"Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"};
       gc.gridy=0;   
       gc.gridx=0;
       JLabel freq=new JLabel("fecuencia de repeticion");
@@ -393,7 +393,7 @@ private  JComboBox dias,mes,hora,minute,semana;
             model_sem.addRow(new Object[]{d[i],false});               
    }
            pan_freq.add(scroll_sem,gc);
-           pan_freq.setPreferredSize(new Dimension(600,300));
+           pan_freq.setPreferredSize(new Dimension(500,300));
           pan_freq.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "Periocidad del Backup",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14),new Color(213,18,2)));
        
         /////boton aceptar /////
@@ -401,7 +401,11 @@ private  JComboBox dias,mes,hora,minute,semana;
        JButton aceptar= new JButton("Crear");
          aceptar.addActionListener(this);
          aceptar.setActionCommand("crear");
+       JButton atras= new JButton("atras");
+        atras.setActionCommand("atras");
+        atras.addActionListener(this);
        panel.add(aceptar,BorderLayout.CENTER); 
+       panel.add(atras,BorderLayout.CENTER); 
        /// agregar a ventana principal////
         gc.insets=new Insets(10,10,10,10);
     principal.setLayout(tb);    
@@ -513,6 +517,17 @@ private  JComboBox dias,mes,hora,minute,semana;
                      }
                  }
                  }
+                    
+         if(e.getActionCommand().equals("atras")){
+            try {
+                this.dispose();
+                gestor.atras(4,nombre);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AgregarSer.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AgregarSer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 
     }
 
