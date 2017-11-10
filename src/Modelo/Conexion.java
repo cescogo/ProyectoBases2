@@ -180,14 +180,15 @@ public class Conexion {
 
     public int countEstrategias(String bd)
     {
-        Statement stm = null;
-        int count=0;
         
-        try {   
+        int count=0;
+         Statement stm = null;
+        try {
             stm = conexion.createStatement();
-          ResultSet rs = stm.executeQuery("select count(*) from estrategias where bd='"+bd+"'");
+            ResultSet rs = stm.executeQuery("select count(*) from estrategias where bd='"+bd+"'");
            getColumnNames(rs);
-           count=rs.getInt("count(*)");
+           rs.next();
+           count=rs.getInt("COUNT(*)");
 
          stm.close();
      
