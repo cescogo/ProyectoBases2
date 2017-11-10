@@ -215,7 +215,8 @@ public class Conexion {
             String st="insert into estrategias (bd,nombre,sentencia,fecha_inicio,estado,frecuencia,dias,inicio_ult_ejecu,fin_ult_ejecu,proxima_ejecucion) values"
                     +"('"+est.getBd()+"','"+est.getNombre()+"','"+est.getSql()+"','"+est.getFec_ini()+"',"+est.getEstado()+","+est.getFreq()+","+est.getDias()+",'','','"+est.getFec_ini()+"')";
             stm.execute(st);
-            
+            st="commit";
+            stm.execute(st);
          stm.close();
          return true;
             }
@@ -241,6 +242,8 @@ public class Conexion {
             String st="insert into system.estrategias@"+bd+"(nombre,sentencia,estado,frecuencia,dias,proxima_ejecucion) values"
                     +"('"+nombre+"','"+sql+"',"+estado+","+freq+","+dias+",'"+prx_eje+"')";
             stm.execute(st);
+            st="commit";
+            stm.execute(st);
 
          stm.close();
          return true;
@@ -254,6 +257,32 @@ public class Conexion {
          return false;
       }
      }
+     
+      public ArrayList<Estrategia> getEstrategias(String bd) throws InterruptedException, SQLException {
+        ArrayList<Estrategia> vec = new ArrayList<>();
+        Statement stm = null;
+        try {
+            stm = conexion.createStatement();
+            ResultSet rs = stm.executeQuery("select * from estrategias where bd='"+bd+"'");
+
+            getColumnNames(rs);
+            while (rs.next()) {
+
+                //Aqui deberia jalar el nombre de la columna
+                vec.add(new Estrategia(bd,rs.getString("nombre"),rs.getString("sentencia"),rs.getString("fecha_inicio"),rs.getInt("estado"),0,rs.getString("inicio_ult_ejecu"),rs.getString("fin_ult_ejecu"),rs.getString("proxima_ejecucion"),0));
+
+            }
+            stm.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+        }
+
+        return vec;
+    }
     
     /*Devuelve columna*/
     public static void getColumnNames(ResultSet rs) throws SQLException {

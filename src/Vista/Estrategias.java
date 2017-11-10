@@ -44,7 +44,7 @@ public class Estrategias extends JFrame implements ActionListener {
      
     }
     
-    public void iniciar()
+    public void iniciar(ArrayList<Estrategia> estrategias)
     {
         
        //Panel de la tabla estrategia
@@ -62,7 +62,7 @@ public class Estrategias extends JFrame implements ActionListener {
        arriba.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(4)));
        arriba.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "ESTRATEGIAS",TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 30), new Color(213,18,2)));
         
-       
+       dibujar(estrategias);
 
         // botones 
         JPanel botones = new JPanel();

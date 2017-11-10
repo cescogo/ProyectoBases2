@@ -92,10 +92,10 @@ public class Control {
     {
         return model.eliminarDBLink(name);
     }
-    public void ventanaEstrategias(String nombre)
+    public void ventanaEstrategias(String nombre) throws InterruptedException, SQLException
     {
         Estrategias est= new Estrategias(this,nombre);
-        est.iniciar();
+        est.iniciar(model.getEstrategias(nombre));
         
     }
     
