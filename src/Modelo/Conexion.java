@@ -238,7 +238,7 @@ public class Conexion {
         
         try {   
             stm = conexion.createStatement();
-            String st="insert into estrategias@"+bd+"(nombre,sentencia,estado,frecuencia,dias,proxima_ejecucion) values"
+            String st="insert into system.estrategias@"+bd+"(nombre,sentencia,estado,frecuencia,dias,proxima_ejecucion) values"
                     +"('"+nombre+"','"+sql+"',"+estado+","+freq+","+dias+",'"+prx_eje+"')";
             stm.execute(st);
 
