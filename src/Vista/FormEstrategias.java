@@ -521,7 +521,7 @@ private  JComboBox dias,mes,hora,minute,semana;
          if(e.getActionCommand().equals("atras")){
             try {
                 this.dispose();
-                gestor.atras(4,nombre);
+                gestor.atras(2,nombre);
             } catch (InterruptedException ex) {
                 Logger.getLogger(AgregarSer.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {

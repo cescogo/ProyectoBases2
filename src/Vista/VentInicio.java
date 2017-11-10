@@ -124,15 +124,19 @@ ta.addMouseListener(this);
                            if(gestor.eliminardblink(ta.getValueAt(i, 0).toString()))
                            {
                                     
+                               
+                                  
                                try {
-                                   JOptionPane.showMessageDialog(null, "Data base link eliminado correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
-                                   this.dispose();
-                                   gestor.atras(1,"inicio");
+                                    JOptionPane.showMessageDialog(null, "Data base link eliminado correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
+                                  this.dispose();
+                                   gestor.atras(1," ");
                                } catch (InterruptedException ex) {
                                    Logger.getLogger(VentInicio.class.getName()).log(Level.SEVERE, null, ex);
                                } catch (SQLException ex) {
                                    Logger.getLogger(VentInicio.class.getName()).log(Level.SEVERE, null, ex);
                                }
+                                   
+                              
                            }
                            else
                            {
@@ -170,7 +174,13 @@ ta.addMouseListener(this);
                      if(colum!=1)
                      {
                          this.dispose();
-                         gestor.ventanaEstrategias(ta.getValueAt(row,0).toString());
+                         try {
+                             gestor.ventanaEstrategias(ta.getValueAt(row,0).toString());
+                         } catch (InterruptedException ex) {
+                             Logger.getLogger(VentInicio.class.getName()).log(Level.SEVERE, null, ex);
+                         } catch (SQLException ex) {
+                             Logger.getLogger(VentInicio.class.getName()).log(Level.SEVERE, null, ex);
+                         }
                      }
                 }
     }
@@ -185,10 +195,11 @@ ta.addMouseListener(this);
 
     @Override
     public void mouseEntered(MouseEvent e) {
-    }
+     }
 
     @Override
     public void mouseExited(MouseEvent e) {
     }
-    
+
+  
 }

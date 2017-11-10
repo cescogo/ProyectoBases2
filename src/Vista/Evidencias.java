@@ -32,9 +32,11 @@ import javax.swing.table.DefaultTableModel;
 public class Evidencias extends JFrame implements ActionListener{
     Control gestor;
     private tablaEvidencia tabla;
-        public Evidencias(Control ges) {
-             super("Mostrar evidencia");
+    String nombre;
+        public Evidencias(Control ges,String nom) {
+             super("Mostrar evidencia servidor"+ nom);
             gestor=ges;
+            nombre=nom;
         }
         
        public void iniciar(){
@@ -82,31 +84,13 @@ public class Evidencias extends JFrame implements ActionListener{
             return false;
         }
     }
-    
-//    private void dibujar(ArrayList<Evidencia> bit)
-//    {
-//        
-//       
-//        for (int i = 0; i < bit.size(); i++) {
-//           
-//            tabla.addRow(
-//                     new Object[]{
-//                        bit.get(i).getBd(),
-//                        bit.get(i).getEstrategia(),
-//                        bit.get(i).getLog(),
-//                        bit.get(i).getC()
-//                         
-//                    });
-//          
-//        }
-//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("atras")){
             try {
                 this.dispose();
-                gestor.atras(5,"evidencias");
+                gestor.atras(2,nombre);
             } catch (InterruptedException ex) {
                 Logger.getLogger(AgregarSer.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {

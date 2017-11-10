@@ -111,7 +111,7 @@ public class Estrategias extends JFrame implements ActionListener {
     if(e.getActionCommand().equals("evidencia")){
         this.dispose();
         try {
-            gestor.ventanaEvidencia();
+            gestor.ventanaEvidencia(nombre);
         } catch (SQLException ex) {
             Logger.getLogger(AgregarSer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -120,7 +120,7 @@ public class Estrategias extends JFrame implements ActionListener {
     if(e.getActionCommand().equals("atras")){
         this.dispose();
         try {
-            gestor.atras(3,"estrategias");
+            gestor.atras(1," ");
         } catch (InterruptedException ex) {
             Logger.getLogger(AgregarSer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

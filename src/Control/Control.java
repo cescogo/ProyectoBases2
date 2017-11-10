@@ -51,22 +51,17 @@ public class Control {
 
     
     public void atras(Integer bandera, String nombre) throws InterruptedException, SQLException {    
-        if (bandera.equals(2)) {
+        if (bandera.equals(1)) {
             ventIni = new VentInicio(this);
             ventIni.iniciar(getdblink());
 
         }
-        else if (bandera.equals(3)) {
-            ventIni.iniciar(getdblink());
-                       
-        } else if (bandera.equals(4)) {
-           ventIni.dispose();
-           ventanaEstrategias(nombre);
-           
-        } else if (bandera.equals(5)) {
-           ventIni.dispose();
-           ventanaEstrategias(nombre);
+        else if (bandera.equals(2)) {
+            Estrategias ven_est= new Estrategias(this,nombre);
+            ven_est.iniciar(model.getEstrategias(nombre));
         }
+                       
+     
         
         
         
@@ -121,9 +116,9 @@ public class Control {
         
     }
     
-    public void ventanaEvidencia() throws SQLException
+    public void ventanaEvidencia(String nom) throws SQLException
     {
-        Evidencias eviden= new Evidencias(this);
+        Evidencias eviden= new Evidencias(this,nom);
         eviden.iniciar();
     }
 }
