@@ -95,4 +95,10 @@ public class Control {
                 System.out.println(count);
         return true;
     }
+    
+    public void ventanaEvidencia() throws SQLException
+    {
+        Evidencias eviden= new Evidencias(this);
+        eviden.iniciar();
+    }
 }

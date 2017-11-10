@@ -60,7 +60,7 @@ public class Estrategias extends JFrame implements ActionListener {
         desplazamientoTabla.setViewportView(table);
        arriba.add(BorderLayout.CENTER,desplazamientoTabla);
        arriba.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(4)));
-       arriba.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "EVIDENCIAS ",TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 30), new Color(213,18,2)));
+       arriba.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "ESTRATEGIAS",TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 30), new Color(213,18,2)));
         
        
 
@@ -72,9 +72,17 @@ public class Estrategias extends JFrame implements ActionListener {
         modificar.addActionListener(this);
         JButton eliminar= new JButton("eliminar");
         eliminar.addActionListener(this);
+        JButton evidencia= new JButton("Ver Tabla Evidencia");
+        evidencia.addActionListener(this);
+        evidencia.setActionCommand("evidencia");
+        JButton atras= new JButton("Atras");
+        atras.addActionListener(this);
+        atras.setActionCommand("atras");
         botones.add(agregar,BorderLayout.CENTER);
         botones.add(modificar,BorderLayout.CENTER);
         botones.add(eliminar,BorderLayout.CENTER);
+        botones.add(evidencia,BorderLayout.CENTER);
+        botones.add(atras,BorderLayout.CENTER);
         
         /// get contentPane
         add(arriba,BorderLayout.CENTER);
@@ -96,6 +104,27 @@ public class Estrategias extends JFrame implements ActionListener {
             Logger.getLogger(Estrategias.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Estrategias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    if(e.getActionCommand().equals("evidencia")){
+        this.dispose();
+        try {
+            gestor.ventanaEvidencia();
+        } catch (SQLException ex) {
+            Logger.getLogger(AgregarSer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    if(e.getActionCommand().equals("atras")){
+        this.dispose();
+        try {
+            gestor.atras();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(AgregarSer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AgregarSer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     }
