@@ -157,6 +157,7 @@ public class Estrategias extends JFrame implements ActionListener {
                         bit.get(i).getNombre(),
                         bit.get(i).getSql(),
                         bit.get(i).getFec_ini(),
+                        bit.get(i).getEstado(),
                         bit.get(i).getIni_ult_eje(),
                         bit.get(i).getFin_ul_eje(),
                         bit.get(i).getProx_eje()
