@@ -10,8 +10,8 @@ package Modelo;
  * @author cesar
  */
 public class Estrategia {
-    private String bd,nombre,sql,fec_ini,hora_ini,estado,freq,ini_ult_eje,fin_ul_eje,prox_eje;
-        private int dias;
+    private String bd,nombre,sql,fec_ini,estado,ini_ult_eje,fin_ul_eje,prox_eje;
+        private int dias,freq;
 
     public String getBd() {
         return bd;
@@ -21,12 +21,12 @@ public class Estrategia {
         this.bd = bd;
     }
 
-    public Estrategia(String bd, String nombre, String sql, String fec_ini, String hora_ini, String estado, String freq, String ini_ult_eje, String fin_ul_eje, String prox_eje, int dias) {
+    public Estrategia(String bd, String nombre, String sql, String fec_ini,String estado, int freq, String ini_ult_eje, String fin_ul_eje, String prox_eje, int dias) {
         this.bd = bd;
         this.nombre = nombre;
         this.sql = sql;
         this.fec_ini = fec_ini;
-        this.hora_ini = hora_ini;
+        
         this.estado = estado;
         this.freq = freq;
         this.ini_ult_eje = ini_ult_eje;
@@ -61,14 +61,6 @@ public class Estrategia {
         this.fec_ini = fec_ini;
     }
 
-    public String getHora_ini() {
-        return hora_ini;
-    }
-
-    public void setHora_ini(String hora_ini) {
-        this.hora_ini = hora_ini;
-    }
-
     public String getEstado() {
         return estado;
     }
@@ -77,11 +69,11 @@ public class Estrategia {
         this.estado = estado;
     }
 
-    public String getFreq() {
+    public int getFreq() {
         return freq;
     }
 
-    public void setFreq(String freq) {
+    public void setFreq(int freq) {
         this.freq = freq;
     }
 

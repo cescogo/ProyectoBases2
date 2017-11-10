@@ -27,6 +27,7 @@ public class Control {
     private SQLiteJDBC sqlite;
     private Calendar fecha;
     private float aux;
+    
 
     private VentInicio ventIni;
 
@@ -89,10 +90,19 @@ public class Control {
         fes.init(model.getSegmentos());
     }
     
-    public boolean crearEstrategia(String bd,String sql,String fec_ini,String freq,int dias)
+    public boolean crearEstrategia(String bd,String sql,String fec_ini,int freq,int dias)
     {
         int count=model.countEstrategias(bd);
-                System.out.println(count);
-        return true;
+        String nombre=bd+"EST"+(count+1);
+        String m=fec_ini.charAt(3)+""+fec_ini.charAt(4);
+        String d=fec_ini.charAt(0)+""+fec_ini.charAt(1);
+       
+        if(Integer.parseInt(m)<fecha.get(Calendar.MONTH)||(Integer.parseInt(m)==fecha.get(Calendar.MONTH)&&Integer.parseInt(d)<fecha.get(Calendar.DATE)))
+        {
+           return model.AgregarEstrategia(new Estrategia(bd,nombre,sql,fec_ini,"activo",freq,"","",fec_ini,dias));
+        }
+        else
+            return model.AgregarEstrategia(new Estrategia(bd,nombre,sql,fec_ini,"inactivo",freq,"","",fec_ini,dias));
+        
     }
 }

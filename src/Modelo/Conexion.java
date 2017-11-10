@@ -204,6 +204,29 @@ public class Conexion {
     }
 
     
+     public boolean AgregarEstrategia(Estrategia est)
+    {
+        Statement stm = null;
+        
+        try {   
+            stm = conexion.createStatement();
+            String st="insert into estrategias (bd,nombre,sentencia,fecha_inicio,estado,frecuencia,dias,inicio_ult_ejecu,fin_ult_ejecu,proxima_ejecucion) values"
+                    +"('"+est.getBd()+"','"+est.getNombre()+"','"+est.getSql()+"','"+est.getFec_ini()+"','"+est.getEstado()+"',"+est.getFreq()+","+est.getDias()+",'','','"+est.getFec_ini()+"')";
+            stm.execute(st);
+
+         stm.close();
+         return true;
+   }catch ( SQLException e ) {
+       System.out.println(e.getMessage());
+         return false;
+         
+      }catch (Exception e)
+      {
+          System.out.println(e.getMessage());
+         return false;
+      }
+    }
+    
     /*Devuelve columna*/
     public static void getColumnNames(ResultSet rs) throws SQLException {
         if (rs == null) {
