@@ -185,7 +185,7 @@ public class Conexion {
          Statement stm = null;
         try {
             stm = conexion.createStatement();
-            ResultSet rs = stm.executeQuery("select count(*) from estrategias where bd='"+bd+"'");
+            ResultSet rs = stm.executeQuery("select count(*) from SYSTEM.estrategias@"+bd);
            getColumnNames(rs);
            rs.next();
            count=rs.getInt("COUNT(*)");
