@@ -27,6 +27,7 @@ public class Control {
     private SQLiteJDBC sqlite;
     private Calendar fecha;
     private float aux;
+    
 
     private VentInicio ventIni;
 
@@ -86,14 +87,23 @@ public class Control {
     public void ventFormEstrategias(String nom) throws InterruptedException, SQLException
     {
         FormEstrategias fes= new FormEstrategias(this, nom);
-        fes.init(model.getSegmentos());
+        fes.init(model.getSegmentos(nom));
     }
     
-    public boolean crearEstrategia(String bd,String sql,String fec_ini,String freq,int dias)
+    public boolean crearEstrategia(String bd,String sql,String fec_ini,int freq,int dias)
     {
         int count=model.countEstrategias(bd);
-                System.out.println(count);
-        return true;
+        String nombre=bd+"EST"+(count+1);
+        String m=fec_ini.charAt(3)+""+fec_ini.charAt(4);
+        String d=fec_ini.charAt(0)+""+fec_ini.charAt(1);
+       
+        if(Integer.parseInt(m)<fecha.get(Calendar.MONTH)||(Integer.parseInt(m)==fecha.get(Calendar.MONTH)&&Integer.parseInt(d)<fecha.get(Calendar.DATE)))
+        {
+           return model.AgregarEstrategia(new Estrategia(bd,nombre,sql,fec_ini,1,freq,"","",fec_ini,dias));
+        }
+        else
+            return model.AgregarEstrategia(new Estrategia(bd,nombre,sql,fec_ini,0,freq,"","",fec_ini,dias));
+        
     }
     
     public void ventanaEvidencia() throws SQLException

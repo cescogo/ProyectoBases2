@@ -78,12 +78,12 @@ public class Conexion {
     }
 
     // se obtienen los segmentos de la base de datos
-    public ArrayList<TableSpace> getSegmentos() throws InterruptedException, SQLException {
+    public ArrayList<TableSpace> getSegmentos(String dblink) throws InterruptedException, SQLException {
         ArrayList<TableSpace> vec = new ArrayList<>();
         Statement stm = null;
         try {
             stm = conexion.createStatement();
-            ResultSet rs = stm.executeQuery("select tablespace_name from dba_tables where tablespace_name is not null AND tablespace_name != 'SYSTEM' group by tablespace_name");
+            ResultSet rs = stm.executeQuery("select tablespace_name from dba_tablespaces@"+dblink+"");
 
             getColumnNames(rs);
             while (rs.next()) {
@@ -180,14 +180,15 @@ public class Conexion {
 
     public int countEstrategias(String bd)
     {
-        Statement stm = null;
-        int count=0;
         
-        try {   
+        int count=0;
+         Statement stm = null;
+        try {
             stm = conexion.createStatement();
-          ResultSet rs = stm.executeQuery("select count(*) from estrategias where bd='"+bd+"'");
+            ResultSet rs = stm.executeQuery("select count(*) from estrategias where bd='"+bd+"'");
            getColumnNames(rs);
-           count=rs.getInt("count(*)");
+           rs.next();
+           count=rs.getInt("COUNT(*)");
 
          stm.close();
      
@@ -203,6 +204,56 @@ public class Conexion {
         return count;
     }
 
+    
+     public boolean AgregarEstrategia(Estrategia est)
+    {
+        Statement stm = null;
+        
+        try {   
+            if(agregarSede(est.getBd(),est.getNombre(),est.getSql(),est.getEstado(),est.getFreq(),est.getDias(),est.getFec_ini()))
+            {  stm = conexion.createStatement();
+            String st="insert into estrategias (bd,nombre,sentencia,fecha_inicio,estado,frecuencia,dias,inicio_ult_ejecu,fin_ult_ejecu,proxima_ejecucion) values"
+                    +"('"+est.getBd()+"','"+est.getNombre()+"','"+est.getSql()+"','"+est.getFec_ini()+"',"+est.getEstado()+","+est.getFreq()+","+est.getDias()+",'','','"+est.getFec_ini()+"')";
+            stm.execute(st);
+            
+         stm.close();
+         return true;
+            }
+            else
+                return false;
+   }catch ( SQLException e ) {
+       System.out.println(e.getMessage());
+         return false;
+         
+      }catch (Exception e)
+      {
+          System.out.println(e.getMessage());
+         return false;
+      }
+    }
+     
+     private boolean agregarSede(String bd,String nombre,String sql,int estado,int freq,int dias,String prx_eje)
+     {
+          Statement stm = null;
+        
+        try {   
+            stm = conexion.createStatement();
+            String st="insert into estrategias@"+bd+"(nombre,sentencia,estado,frecuencia,dias,proxima_ejecucion) values"
+                    +"('"+nombre+"','"+sql+"',"+estado+","+freq+","+dias+",'"+prx_eje+"')";
+            stm.execute(st);
+
+         stm.close();
+         return true;
+   }catch ( SQLException e ) {
+       System.out.println(e.getMessage());
+         return false;
+         
+      }catch (Exception e)
+      {
+          System.out.println(e.getMessage());
+         return false;
+      }
+     }
     
     /*Devuelve columna*/
     public static void getColumnNames(ResultSet rs) throws SQLException {

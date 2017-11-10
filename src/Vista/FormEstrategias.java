@@ -43,6 +43,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.LayoutManager;
+import static java.lang.Math.pow;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
@@ -199,7 +200,6 @@ private  JComboBox dias,mes,hora,minute,semana;
         pan_job.add(r_par_acu,gc);
  
         pan_job.setPreferredSize(new Dimension(600,150));
-        pan_job.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)));
         pan_job.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "opciones de Backup",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14), new Color(213,18,2)));
         
       ////////tablespace//////
@@ -268,6 +268,11 @@ private  JComboBox dias,mes,hora,minute,semana;
         
        for(int i=0;i<31;i++)
         {
+             if(i<9)
+            {
+                dia.addElement("0"+(i+1));
+            }
+            else
            dia.addElement(i+1);
            
         }
@@ -278,6 +283,11 @@ private  JComboBox dias,mes,hora,minute,semana;
         
         for(int i=0;i<12;i++)
         {
+             if(i<9)
+            {
+                me.addElement("0"+(i+1));
+            }
+            else
            me.addElement(i+1);
         }
         mes= new JComboBox(me);
@@ -478,14 +488,30 @@ private  JComboBox dias,mes,hora,minute,semana;
                  }
                  else if(e.getActionCommand().equals("crear"))
                  {
+                     if(frecuencia.getText().equals(""))
+                     {
+                         JOptionPane.showMessageDialog(null, "Error no se envio el formulario, existe un campo vacio ", "Error", JOptionPane.ERROR_MESSAGE);
+                     }
+                     else
+                     {
                      if(!r_full.isSelected())
                      {
                          tablespaces();
                      }
                      String fecha=dia.getSelectedItem().toString()+"/"+me.getSelectedItem()+" "+hor.getSelectedItem()+":"+min.getSelectedItem();
-                     String freq= frecuencia.getText();
-                     
-                     gestor.crearEstrategia(nombre, query,fecha,freq,1);
+                     int freq= Integer.parseInt(frecuencia.getText());
+                         
+                         
+                     if(gestor.crearEstrategia(nombre, query,fecha,freq,dias()))
+                     {
+                             JOptionPane.showMessageDialog(null, "Estrategia creada correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
+           
+                     }
+                     else{
+                             JOptionPane.showMessageDialog(null, "Error al crear la estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
+           
+                     }
+                 }
                  }
                 
     }
@@ -510,6 +536,18 @@ private  JComboBox dias,mes,hora,minute,semana;
         query=query+";";
     }
   
-    
+    private int dias()
+    {
+        int dias=0;
+        for(int i=0;i<7;i++)
+        {
+            if (tab_sem.getValueAt(i, 1).toString().equals("true"))
+            {
+                dias=dias|(int)pow(2,i);
+            }
+            
+        }
+        return dias;
+    }
     
 }

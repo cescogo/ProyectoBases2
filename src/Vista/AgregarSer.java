@@ -124,7 +124,7 @@ public class AgregarSer extends JFrame implements ActionListener {
             }
                 
         }
-            else     JOptionPane.showMessageDialog(null, "Error no se envio el formulario, existe un campo vacio ", "Error", JOptionPane.ERROR_MESSAGE);
+            else  JOptionPane.showMessageDialog(null, "Error no se envio el formulario, existe un campo vacio ", "Error", JOptionPane.ERROR_MESSAGE);
             
                 
         }
