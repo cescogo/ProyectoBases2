@@ -178,6 +178,32 @@ public class Conexion {
       }
     }
 
+    public int countEstrategias(String bd)
+    {
+        Statement stm = null;
+        int count=0;
+        
+        try {   
+            stm = conexion.createStatement();
+          ResultSet rs = stm.executeQuery("select count(*) from estrategias where bd='"+bd+"'");
+           getColumnNames(rs);
+           count=rs.getInt("count(*)");
+
+         stm.close();
+     
+   }catch ( SQLException e ) {
+       System.out.println(e.getMessage());
+         
+         
+      }catch (Exception e)
+      {
+          System.out.println(e.getMessage());
+         
+      }
+        return count;
+    }
+
+    
     /*Devuelve columna*/
     public static void getColumnNames(ResultSet rs) throws SQLException {
         if (rs == null) {

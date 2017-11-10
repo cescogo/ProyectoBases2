@@ -88,4 +88,11 @@ public class Control {
         FormEstrategias fes= new FormEstrategias(this, nom);
         fes.init(model.getSegmentos());
     }
+    
+    public boolean crearEstrategia(String bd,String sql,String fec_ini,String freq,int dias)
+    {
+        int count=model.countEstrategias(bd);
+                System.out.println(count);
+        return true;
+    }
 }

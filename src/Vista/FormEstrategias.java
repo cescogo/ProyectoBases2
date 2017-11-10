@@ -72,9 +72,10 @@ private  JComboBox dias,mes,hora,minute,semana;
   private DefaultTableModel model,model_sem;
   private JTable ta,tab_sem;
   private JTextField frecuencia;
-  private  JRadioButton r_par_com,r_par_inc,r_par_inc1,r_par_acu;
+  private  JRadioButton r_par_com,r_par_inc,r_par_inc1,r_par_acu,r_full;
   private JLabel leg_par;
-  private String query;
+  private String query,nombre;
+  
  
     public FormEstrategias(Control c,String nom)
     {
@@ -91,7 +92,8 @@ private  JComboBox dias,mes,hora,minute,semana;
          me = new DefaultComboBoxModel();
         hor = new DefaultComboBoxModel();
          min = new DefaultComboBoxModel();
-         query="";
+         query="backup database;";
+         nombre=nom;
     }
     
     public void init(ArrayList<TableSpace> TaSpa) throws InterruptedException
@@ -137,15 +139,15 @@ private  JComboBox dias,mes,hora,minute,semana;
         
         ButtonGroup group_tipo = new ButtonGroup();
         
-        JRadioButton r_tipo= new JRadioButton("Full");
-        r_tipo.addActionListener(this);
-        r_tipo.setActionCommand("full");
-        r_tipo.setSelected(true);
-        group_tipo.add(r_tipo);
+         r_full= new JRadioButton("Full");
+        r_full.addActionListener(this);
+        r_full.setActionCommand("full");
+        r_full.setSelected(true);
+        group_tipo.add(r_full);
         gc.gridx=1;
-        pan_job.add(r_tipo,gc);
+        pan_job.add(r_full,gc);
         
-        r_tipo= new JRadioButton("Parcial");
+      JRadioButton  r_tipo= new JRadioButton("Parcial");
         r_tipo.addActionListener(this);
         r_tipo.setActionCommand("parcial");
         group_tipo.add(r_tipo);
@@ -166,7 +168,7 @@ private  JComboBox dias,mes,hora,minute,semana;
         r_par_com.addActionListener(this);
         r_par_com.setActionCommand("completo");
         r_par_com.setVisible(false);
-        r_par_com.setSelected(true);
+        
         group_par.add(r_par_com);
         gc.gridx=1;
          pan_job.add(r_par_com,gc);
@@ -230,7 +232,12 @@ private  JComboBox dias,mes,hora,minute,semana;
          model.addColumn("Tablespace");
          model.addColumn("Select");
            for (int i = 0; i < TaSpa.size(); i++) {
-          String aux=TaSpa.get(i).getNombre();
+               String aux=TaSpa.get(i).getNombre();
+               if(i==0)
+               {
+                    model.addRow(new Object[]{aux,true});
+               }else
+          
             model.addRow(new Object[]{aux,false});               
            
     }
@@ -262,6 +269,7 @@ private  JComboBox dias,mes,hora,minute,semana;
        for(int i=0;i<31;i++)
         {
            dia.addElement(i+1);
+           
         }
         dias= new JComboBox(dia);
         gc.gridx=1;
@@ -294,6 +302,11 @@ private  JComboBox dias,mes,hora,minute,semana;
         gc.gridy=2;
          for(int i=0;i<24;i++)
         {
+            if(i<10)
+            {
+                hor.addElement("0"+i);
+            }
+            else
            hor.addElement(i);
         }
         hora= new JComboBox(hor);       
@@ -302,6 +315,11 @@ private  JComboBox dias,mes,hora,minute,semana;
         gc.gridx=5;
           for(int i=0;i<60;i++)
         {
+              if(i<10)
+            {
+                min.addElement("0"+i);
+            }
+            else
            min.addElement(i);
         }
         minute= new JComboBox(min);
@@ -358,7 +376,10 @@ private  JComboBox dias,mes,hora,minute,semana;
          model_sem.addColumn("Dia");
          model_sem.addColumn("Select");
            for (int i = 0; i < 7; i++) {
-         
+         if(i==0)
+         {
+              model_sem.addRow(new Object[]{d[i],true});  
+         }else
             model_sem.addRow(new Object[]{d[i],false});               
    }
            pan_freq.add(scroll_sem,gc);
@@ -409,10 +430,7 @@ private  JComboBox dias,mes,hora,minute,semana;
     @Override
     public void actionPerformed(ActionEvent e) {
 
-		if(e.getActionCommand().equals("Crear"))		
-                {
-                }
-                else
+		
                     if(e.getActionCommand().equals("parcial"))
                     {
                          r_par_com.setVisible(true);
@@ -421,6 +439,9 @@ private  JComboBox dias,mes,hora,minute,semana;
                          leg_par.setVisible(true);
                          r_par_acu.setVisible(true);
                          pan_Tab.setVisible(true);
+                         r_par_com.setSelected(true);
+                          query="";
+                         query="backup full tablespace ";
                          
                     }
                 else
@@ -433,7 +454,7 @@ private  JComboBox dias,mes,hora,minute,semana;
                          leg_par.setVisible(false);
                          pan_Tab.setVisible(false);
                          query="";
-                         query="backup database";
+                         query="backup database;";
                     }
                  else if(e.getActionCommand().equals("completo"))
                  {
@@ -457,12 +478,37 @@ private  JComboBox dias,mes,hora,minute,semana;
                  }
                  else if(e.getActionCommand().equals("crear"))
                  {
-                     System.out.println("query: "+query);
+                     if(!r_full.isSelected())
+                     {
+                         tablespaces();
+                     }
+                     String fecha=dia.getSelectedItem().toString()+"/"+me.getSelectedItem()+" "+hor.getSelectedItem()+":"+min.getSelectedItem();
+                     String freq= frecuencia.getText();
+                     
+                     gestor.crearEstrategia(nombre, query,fecha,freq,1);
                  }
                 
     }
 
-
+    public void tablespaces()
+    {
+        boolean primero=true;
+        for(int i=0;i<TaSpa.size();i++)
+        {
+            
+            if (ta.getValueAt(i, 1).toString().equals("true"))
+            {
+                if(primero)
+                {
+                    query=query+TaSpa.get(i).getNombre();
+                    primero=false;
+                }
+                else
+                    query=query+","+TaSpa.get(i).getNombre();
+            }
+        }
+        query=query+";";
+    }
   
     
     
