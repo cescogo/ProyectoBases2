@@ -6,15 +6,26 @@
 package Vista;
 
 import Control.Control;
+import Modelo.Estrategia;
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,30 +34,52 @@ import javax.swing.JPanel;
 public class Estrategias extends JFrame implements ActionListener {
     private Control gestor;
     private String nombre;
+    private tablaEstrategia tabla;
     public Estrategias(Control ges, String nom) {
         super(nom.toString());
         nombre=nom;
         gestor=ges;
+        
+        
+     
     }
     
     public void iniciar()
     {
+        
+       //Panel de la tabla estrategia
+        JPanel arriba= new JPanel();
+        tabla = new tablaEstrategia();
+        arriba.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
+        arriba.setLayout(new BorderLayout());
+        JScrollPane desplazamientoTabla = new JScrollPane(
+                  ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                  ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JTable table = new JTable();        
+        table.setModel(tabla);
+        desplazamientoTabla.setViewportView(table);
+       arriba.add(BorderLayout.CENTER,desplazamientoTabla);
+       arriba.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(4)));
+       arriba.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "EVIDENCIAS ",TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 30), new Color(213,18,2)));
+        
+       
+
         // botones 
         JPanel botones = new JPanel();
         JButton agregar= new JButton("agregar");
         agregar.addActionListener(this);
-            JButton modificar= new JButton("modificar");
+        JButton modificar= new JButton("modificar");
         modificar.addActionListener(this);
-            JButton eliminar= new JButton("eliminar");
+        JButton eliminar= new JButton("eliminar");
         eliminar.addActionListener(this);
         botones.add(agregar,BorderLayout.CENTER);
         botones.add(modificar,BorderLayout.CENTER);
         botones.add(eliminar,BorderLayout.CENTER);
         
         /// get contentPane
-      
-          add(botones,BorderLayout.SOUTH);
-      this.setExtendedState(MAXIMIZED_BOTH);
+        add(arriba,BorderLayout.CENTER);
+        add(botones,BorderLayout.SOUTH);
+        this.setExtendedState(MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,4 +100,40 @@ public class Estrategias extends JFrame implements ActionListener {
     }
     }
     
+    class tablaEstrategia extends DefaultTableModel {
+
+        public tablaEstrategia() {
+            super(new Object[][]{},
+                    new String[]{            
+            "Servidor","Estrategia","Sentencia utilizada","Primera ejecución","Estado","Fecha inicio de ultima ejec.","Fecha final de ultima ejec.","Próxima ejecución"});
+            
+            }
+        
+        @Override
+        public boolean isCellEditable(int filas, int columnas)
+        {
+            return false;
+        }
+    }
+    
+    private void dibujar(ArrayList<Estrategia> bit)
+    {
+        
+       
+        for (int i = 0; i < bit.size(); i++) {
+           
+            tabla.addRow(
+                     new Object[]{
+                        bit.get(i).getBd(),
+                        bit.get(i).getNombre(),
+                        bit.get(i).getSql(),
+                        bit.get(i).getFec_ini(),
+                        bit.get(i).getIni_ult_eje(),
+                        bit.get(i).getFin_ul_eje(),
+                        bit.get(i).getProx_eje()
+                        
+                    });
+          
+        }
+    }
 }

@@ -200,7 +200,7 @@ private  JComboBox dias,mes,hora,minute,semana;
  
         pan_job.setPreferredSize(new Dimension(600,150));
         pan_job.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)));
-          pan_job.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "opciones de Backup",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14), new Color(213,18,2)));
+        pan_job.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "opciones de Backup",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14), new Color(213,18,2)));
         
       ////////tablespace//////
         ta= new JTable();
