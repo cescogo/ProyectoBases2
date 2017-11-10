@@ -78,12 +78,12 @@ public class Conexion {
     }
 
     // se obtienen los segmentos de la base de datos
-    public ArrayList<TableSpace> getSegmentos() throws InterruptedException, SQLException {
+    public ArrayList<TableSpace> getSegmentos(String dblink) throws InterruptedException, SQLException {
         ArrayList<TableSpace> vec = new ArrayList<>();
         Statement stm = null;
         try {
             stm = conexion.createStatement();
-            ResultSet rs = stm.executeQuery("select tablespace_name from dba_tables where tablespace_name is not null AND tablespace_name != 'SYSTEM' group by tablespace_name");
+            ResultSet rs = stm.executeQuery("select tablespace_name from dba_tablespaces@"+dblink+"");
 
             getColumnNames(rs);
             while (rs.next()) {
@@ -210,9 +210,36 @@ public class Conexion {
         Statement stm = null;
         
         try {   
-            stm = conexion.createStatement();
+            if(agregarSede(est.getBd(),est.getNombre(),est.getSql(),est.getEstado(),est.getFreq(),est.getDias(),est.getFec_ini()))
+            {  stm = conexion.createStatement();
             String st="insert into estrategias (bd,nombre,sentencia,fecha_inicio,estado,frecuencia,dias,inicio_ult_ejecu,fin_ult_ejecu,proxima_ejecucion) values"
-                    +"('"+est.getBd()+"','"+est.getNombre()+"','"+est.getSql()+"','"+est.getFec_ini()+"','"+est.getEstado()+"',"+est.getFreq()+","+est.getDias()+",'','','"+est.getFec_ini()+"')";
+                    +"('"+est.getBd()+"','"+est.getNombre()+"','"+est.getSql()+"','"+est.getFec_ini()+"',"+est.getEstado()+","+est.getFreq()+","+est.getDias()+",'','','"+est.getFec_ini()+"')";
+            stm.execute(st);
+            
+         stm.close();
+         return true;
+            }
+            else
+                return false;
+   }catch ( SQLException e ) {
+       System.out.println(e.getMessage());
+         return false;
+         
+      }catch (Exception e)
+      {
+          System.out.println(e.getMessage());
+         return false;
+      }
+    }
+     
+     private boolean agregarSede(String bd,String nombre,String sql,int estado,int freq,int dias,String prx_eje)
+     {
+          Statement stm = null;
+        
+        try {   
+            stm = conexion.createStatement();
+            String st="insert into estrategias@"+bd+"(nombre,sentencia,estado,frecuencia,dias,proxima_ejecucion) values"
+                    +"('"+nombre+"','"+sql+"',"+estado+","+freq+","+dias+",'"+prx_eje+"')";
             stm.execute(st);
 
          stm.close();
@@ -226,7 +253,7 @@ public class Conexion {
           System.out.println(e.getMessage());
          return false;
       }
-    }
+     }
     
     /*Devuelve columna*/
     public static void getColumnNames(ResultSet rs) throws SQLException {

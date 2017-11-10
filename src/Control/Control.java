@@ -87,7 +87,7 @@ public class Control {
     public void ventFormEstrategias(String nom) throws InterruptedException, SQLException
     {
         FormEstrategias fes= new FormEstrategias(this, nom);
-        fes.init(model.getSegmentos());
+        fes.init(model.getSegmentos(nom));
     }
     
     public boolean crearEstrategia(String bd,String sql,String fec_ini,int freq,int dias)
@@ -99,10 +99,10 @@ public class Control {
        
         if(Integer.parseInt(m)<fecha.get(Calendar.MONTH)||(Integer.parseInt(m)==fecha.get(Calendar.MONTH)&&Integer.parseInt(d)<fecha.get(Calendar.DATE)))
         {
-           return model.AgregarEstrategia(new Estrategia(bd,nombre,sql,fec_ini,"activo",freq,"","",fec_ini,dias));
+           return model.AgregarEstrategia(new Estrategia(bd,nombre,sql,fec_ini,1,freq,"","",fec_ini,dias));
         }
         else
-            return model.AgregarEstrategia(new Estrategia(bd,nombre,sql,fec_ini,"inactivo",freq,"","",fec_ini,dias));
+            return model.AgregarEstrategia(new Estrategia(bd,nombre,sql,fec_ini,0,freq,"","",fec_ini,dias));
         
     }
 }

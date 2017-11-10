@@ -10,8 +10,8 @@ package Modelo;
  * @author cesar
  */
 public class Estrategia {
-    private String bd,nombre,sql,fec_ini,estado,ini_ult_eje,fin_ul_eje,prox_eje;
-        private int dias,freq;
+    private String bd,nombre,sql,fec_ini,ini_ult_eje,fin_ul_eje,prox_eje;
+        private int dias,freq,estado;
 
     public String getBd() {
         return bd;
@@ -21,7 +21,7 @@ public class Estrategia {
         this.bd = bd;
     }
 
-    public Estrategia(String bd, String nombre, String sql, String fec_ini,String estado, int freq, String ini_ult_eje, String fin_ul_eje, String prox_eje, int dias) {
+    public Estrategia(String bd, String nombre, String sql, String fec_ini,int estado, int freq, String ini_ult_eje, String fin_ul_eje, String prox_eje, int dias) {
         this.bd = bd;
         this.nombre = nombre;
         this.sql = sql;
@@ -61,11 +61,11 @@ public class Estrategia {
         this.fec_ini = fec_ini;
     }
 
-    public String getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
 
