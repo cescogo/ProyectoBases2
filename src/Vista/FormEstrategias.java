@@ -66,8 +66,8 @@ public class FormEstrategias extends JFrame implements ActionListener  {
     private JPanel panel,pan_Tab,pan_fecha,principal,pan_job,pan_freq;
      private Button aceptar;
     private Control gestor;
-  private DefaultComboBoxModel dia,me,hor,min,sem;
-private  JComboBox dias,mes,hora,minute,semana;
+  private DefaultComboBoxModel dia,me,hor,min,sem,horIni,horFin,minIni,minFin;
+private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minuteFin;
 
   private  ArrayList<TableSpace> TaSpa;
   private DefaultTableModel model,model_sem;
@@ -91,8 +91,13 @@ private  JComboBox dias,mes,hora,minute,semana;
        
          dia = new DefaultComboBoxModel();
          me = new DefaultComboBoxModel();
-        hor = new DefaultComboBoxModel();
+         hor = new DefaultComboBoxModel();
          min = new DefaultComboBoxModel();
+         horIni = new DefaultComboBoxModel();
+         minIni = new DefaultComboBoxModel();
+         horFin = new DefaultComboBoxModel();
+         minFin = new DefaultComboBoxModel();
+         
          query="backup database;";
          nombre=nom;
     }
@@ -345,19 +350,106 @@ private  JComboBox dias,mes,hora,minute,semana;
       String[] d= new String[]{"Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"};
       gc.gridy=0;   
       gc.gridx=0;
-      JLabel freq=new JLabel("fecuencia de repeticion");
+      JLabel freq=new JLabel("fecuencia de repetición");
          pan_freq.add(freq,gc);
          
-         gc.gridx=1;
+        gc.gridx=1;
         frecuencia= new JTextField(10);        
         pan_freq.add(frecuencia,gc);
         
-         gc.gridy=1;   
-      gc.gridx=0;
-        JLabel dia_sem= new JLabel("Dias que se ejecuta");
+        //backup inicio
+        gc.gridx=0;
+        gc.gridy=1;
+        fecha= new JLabel("Hora de inicio del tiempo backup");
+        pan_freq.add(fecha,gc);
+      
+        gc.gridx=1;
+        gc.gridy=1;
+       JLabel hora_Ini_b=new JLabel("Hora");
+        pan_freq.add(hora_Ini_b,gc);
+        
+        gc.gridx=2;
+        JLabel min_Ini_b=new JLabel("Minutos");
+        pan_freq.add(min_Ini_b,gc);
+        
+        gc.gridx=1;
+        gc.gridy=2;
+         for(int i=0;i<24;i++)
+        {
+            if(i<10)
+            {
+                horIni.addElement("0"+i);
+            }
+            else
+           horIni.addElement(i);
+        }
+        horaIni= new JComboBox(horIni);       
+        pan_freq.add(hora,gc);
+        
+        gc.gridx=2;
+          for(int i=0;i<60;i++)
+        {
+              if(i<10)
+            {
+                minIni.addElement("0"+i);
+            }
+            else
+           minIni.addElement(i);
+        }
+        minuteIni= new JComboBox(minIni);
+        
+        pan_freq.add(minuteIni,gc);
+        
+        //backup final
+        gc.gridx=0;
+        gc.gridy=3;
+        fecha= new JLabel("Hora de final del tiempo backup");
+        pan_freq.add(fecha,gc);
+      
+        gc.gridx=1;
+        gc.gridy=3;
+       JLabel hora_Fin_b=new JLabel("Hora");
+        pan_freq.add(hora_Fin_b,gc);
+        
+        gc.gridx=2;
+        JLabel min_Fin_b=new JLabel("Minutos");
+        pan_freq.add(min_Fin_b,gc);
+        
+        gc.gridx=1;
+        gc.gridy=4;
+         for(int i=0;i<24;i++)
+        {
+            if(i<10)
+            {
+                horFin.addElement("0"+i);
+            }
+            else
+           horFin.addElement(i);
+        }
+        horaFin= new JComboBox(horFin);       
+        pan_freq.add(horaFin,gc);
+        
+        gc.gridx=2;
+          for(int i=0;i<60;i++)
+        {
+              if(i<10)
+            {
+                minFin.addElement("0"+i);
+            }
+            else
+           minFin.addElement(i);
+        }
+        minuteFin= new JComboBox(minFin);
+        
+        pan_freq.add(minuteFin,gc);
+        
+        gc.gridy=5;   
+        gc.gridx=0;
+        JLabel dia_sem= new JLabel("Dias que se ejecutará");
         pan_freq.add(dia_sem,gc);
         
          gc.gridx=1;
+         gc.gridy=5; 
         tab_sem= new JTable();
         JScrollPane scroll_sem = new JScrollPane(
                   ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -393,7 +485,7 @@ private  JComboBox dias,mes,hora,minute,semana;
             model_sem.addRow(new Object[]{d[i],false});               
    }
            pan_freq.add(scroll_sem,gc);
-           pan_freq.setPreferredSize(new Dimension(500,300));
+           pan_freq.setPreferredSize(new Dimension(500,400));
           pan_freq.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "Periocidad del Backup",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14),new Color(213,18,2)));
        
         /////boton aceptar /////
