@@ -64,14 +64,14 @@ public class AgregarSer extends JFrame implements ActionListener {
      principal.add(puerto,gc);
       gc.gridx=0;
     gc.gridy=3;
-    add= new JLabel("Digite el usuario del Servidor: ");
+    add= new JLabel("Digite el Usuario del Servidor: ");
      principal.add(add,gc);
           gc.gridx=1;
     user= new JTextField(10);
      principal.add(user,gc);
        gc.gridx=0;
     gc.gridy=4;
-    add= new JLabel("inserte el password del server: ");
+    add= new JLabel("Digite el Password del Servidor: ");
      principal.add(add,gc);
           gc.gridx=1;
     password= new JTextField(10);
