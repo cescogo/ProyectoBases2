@@ -114,7 +114,7 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
         pan_job.setLayout(tb);
         gc.gridx=0;
         gc.gridy=0;
-        JLabel estado= new JLabel("opciones de las estrategias");
+        JLabel estado= new JLabel("Opciones de las estrategias");
         pan_job.add(estado,gc);
         
          gc.gridy=1;
@@ -259,7 +259,7 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
        pan_fecha.setLayout(tb);
        gc.gridx=0;
        gc.gridy=0;
-      JLabel fecha= new JLabel("fecha de inicio de la estrategia");
+      JLabel fecha= new JLabel("Fecha de inicio de la estrategia");
       pan_fecha.add(fecha,gc);
       
       gc.gridx=1;
@@ -268,7 +268,7 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
       pan_fecha.add(dia_Ini,gc);
       
       gc.gridx=2;
-      JLabel mes_Ini=new JLabel("mes");
+      JLabel mes_Ini=new JLabel("Mes");
         pan_fecha.add(mes_Ini,gc);     
         
        for(int i=0;i<31;i++)
@@ -306,11 +306,11 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
       
       gc.gridx=4;
       gc.gridy=1;
-       JLabel hora_Ini=new JLabel("hora");
+       JLabel hora_Ini=new JLabel("Hora");
         pan_fecha.add(hora_Ini,gc);
         
         gc.gridx=5;
-        JLabel min_Ini=new JLabel("minutos");
+        JLabel min_Ini=new JLabel("Minutos");
         pan_fecha.add(min_Ini,gc);
         
          gc.gridx=4;
@@ -342,7 +342,7 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
         pan_fecha.add(minute,gc);
        
         pan_fecha.setPreferredSize(new Dimension(590,300));
-        pan_fecha.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "fecha y hora que iniciaria el Backup",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14),new Color(213,18,2)));
+        pan_fecha.setBorder(BorderFactory.createTitledBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)), "Fecha de inicio del respaldo",TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Calibri", 1, 14),new Color(213,18,2)));
     
       ///////panel frecuencia/////
               gc.insets=new Insets(0,10,10,10);
@@ -350,7 +350,7 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
       String[] d= new String[]{"Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"};
       gc.gridy=0;   
       gc.gridx=0;
-      JLabel freq=new JLabel("fecuencia de repetición");
+      JLabel freq=new JLabel("Frecuencia de repetición en minutos");
          pan_freq.add(freq,gc);
          
         gc.gridx=1;
@@ -403,7 +403,7 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
         //backup final
         gc.gridx=0;
         gc.gridy=3;
-        fecha= new JLabel("Hora de final del tiempo backup");
+        fecha= new JLabel("Hora de final del tiempo respaldo");
         pan_freq.add(fecha,gc);
       
         gc.gridx=1;

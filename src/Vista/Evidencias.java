@@ -56,7 +56,7 @@ public class Evidencias extends JFrame implements ActionListener{
         
         
         JPanel botones= new JPanel();
-        JButton atras= new JButton("atras");
+        JButton atras= new JButton("Atras");
         atras.setActionCommand("atras");
         atras.addActionListener(this);
         botones.add(atras,BorderLayout.CENTER);
