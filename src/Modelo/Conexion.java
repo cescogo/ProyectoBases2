@@ -13,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,8 +28,8 @@ public class Conexion {
 
     private Connection conexion;
     static String url = "jdbc:oracle:thin:@localhost:1521/XE"; //Descargar ojdbc6.jar e incluirlo en la libreria
-    static String user = "system";
-    static String password = "root";
+    static String user = "central";
+    static String password = "central";
     private boolean exito;
     private Control gestor;
 
@@ -110,11 +112,8 @@ public class Conexion {
         
         try {   
             stm = conexion.createStatement();
-            String st="CREATE DATABASE LINK "+dblink.getName()+" CONNECT TO "+ dblink.getUser()+" IDENTIFIED BY "+ dblink.getPassword()+ " USING'(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST ="+ dblink.getIp()+")(PORT = "+dblink.getPort()+"))(CONNECT_DATA = (SERVICE_NAME = XE)))'";
+            String st="CREATE DATABASE LINK "+dblink.getName()+" CONNECT TO sede IDENTIFIED BY sede USING'(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST ="+ dblink.getIp()+")(PORT = "+dblink.getPort()+"))(CONNECT_DATA = (SERVICE_NAME = XE)))'";
             stm.execute(st);
-//         stm.addBatch(st);
-//         stm.executeBatch();
-//         stm.clearBatch();
          stm.close();
          return true;
    }catch ( SQLException e ) {
@@ -185,7 +184,7 @@ public class Conexion {
          Statement stm = null;
         try {
             stm = conexion.createStatement();
-            ResultSet rs = stm.executeQuery("select count(*) from SYSTEM.estrategias@"+bd);
+            ResultSet rs = stm.executeQuery("select count(*) from sede.estrategias@"+bd);
            getColumnNames(rs);
            rs.next();
            count=rs.getInt("COUNT(*)");
@@ -207,17 +206,28 @@ public class Conexion {
     
      public boolean AgregarEstrategia(Estrategia est)
     {
-        Statement stm = null;
+        PreparedStatement stm = null;
         
         try {   
-            if(agregarSede(est.getBd(),est.getNombre(),est.getSql(),est.getEstado(),est.getFreq(),est.getDias(),est.getFec_ini()))
-            {  stm = conexion.createStatement();
-            String st="insert into estrategias (bd,nombre,sentencia,fecha_inicio,estado,frecuencia,dias,inicio_ult_ejecu,fin_ult_ejecu,proxima_ejecucion) values"
-                    +"('"+est.getBd()+"','"+est.getNombre()+"','"+est.getSql()+"','"+est.getFec_ini()+"',"+est.getEstado()+","+est.getFreq()+","+est.getDias()+",'','','"+est.getFec_ini()+"')";
-            stm.execute(st);
-            st="commit";
-            stm.execute(st);
-         stm.close();
+           if(agregarSede(est.getBd(),est.getNombre(),est.getSql(),est.getEstado(),est.getFreq(),est.getDias(),est.getIni_rang(),est.getFin_ran(),est.getFec_ini()))
+           {
+        
+            String st="insert into estrategias values (?,?,?,?,?,?,?,?,?,?,?,?)";
+            stm = conexion.prepareStatement(st);
+            stm.setString(1, est.getBd());
+            stm.setString(2,est.getNombre());
+            stm.setString(3, est.getSql());
+            stm.setTimestamp(4, est.getFec_ini());
+            stm.setInt(5, est.getEstado());
+            stm.setInt(6, est.getFreq());
+            stm.setInt(7,est.getDias());
+            stm.setInt(8,est.getIni_rang());
+            stm.setInt(9,est.getFin_ran());
+            stm.setTimestamp(10,est.getIni_ult_eje());
+            stm.setTimestamp(11,est.getFin_ul_eje());
+            stm.setTimestamp(12,est.getFec_ini());
+             stm.executeUpdate();
+            stm.close();
          return true;
             }
             else
@@ -233,19 +243,22 @@ public class Conexion {
       }
     }
      
-     private boolean agregarSede(String bd,String nombre,String sql,int estado,int freq,int dias,String prx_eje)
+     private boolean agregarSede(String bd,String nombre,String sql,int estado,int freq,int dias,int ini_rang,int fin_rang,Timestamp prx_eje)
      {
-          Statement stm = null;
-        
+          PreparedStatement stm = null;
+        String insert="insert into sede.estrategias@"+bd+" values(?,?,?,?,?,?,?,?)";
         try {   
-            stm = conexion.createStatement();
-            String st="insert into system.estrategias@"+bd+"(nombre,sentencia,estado,frecuencia,dias,proxima_ejecucion) values"
-                    +"('"+nombre+"','"+sql+"',"+estado+","+freq+","+dias+",'"+prx_eje+"')";
-            stm.execute(st);
-            st="commit";
-            stm.execute(st);
-
-         stm.close();
+            stm = conexion.prepareStatement(insert);
+            stm.setString(1,nombre);
+            stm.setString(2,sql);
+            stm.setInt(3,estado);
+            stm.setInt(4,freq);
+            stm.setInt(5,dias);
+            stm.setInt(6,ini_rang);
+            stm.setInt(7,fin_rang);
+            stm.setTimestamp(8,prx_eje);
+            stm.executeUpdate();
+            stm.close();
          return true;
    }catch ( SQLException e ) {
        System.out.println(e.getMessage());
@@ -269,8 +282,7 @@ public class Conexion {
             while (rs.next()) {
 
                 //Aqui deberia jalar el nombre de la columna
-                vec.add(new Estrategia(bd,rs.getString("nombre"),rs.getString("sentencia"),rs.getString("fecha_inicio"),rs.getInt("estado"),0,rs.getString("inicio_ult_ejecu"),rs.getString("fin_ult_ejecu"),rs.getString("proxima_ejecucion"),0));
-
+             vec.add(new Estrategia(bd,rs.getString("nombre"),rs.getString("sentencia"),rs.getInt("dias"),rs.getInt("frecuencia"),rs.getInt("estado"),rs.getInt("ini_rang"),rs.getInt("fin_rang"),rs.getTimestamp("fecha_inicio"),rs.getTimestamp("inicio_ult_ejecu"),rs.getTimestamp("fin_ult_ejecu"),rs.getTimestamp("proxima_ejecucion")));
             }
             stm.close();
         } catch (SQLException ex) {

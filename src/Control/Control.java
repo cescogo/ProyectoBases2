@@ -12,6 +12,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  *
@@ -100,20 +102,13 @@ public class Control {
         fes.init(model.getSegmentos(nom));
     }
     
-    public boolean crearEstrategia(String bd,String sql,String fec_ini,int freq,int dias)
+    public boolean crearEstrategia(String bd,String sql,Date fec_ini,int freq,int dias,int ini_rang, int fin_rang)
     {
         int count=model.countEstrategias(bd);
         String nombre=bd+"EST"+(count+1);
-        String m=fec_ini.charAt(3)+""+fec_ini.charAt(4);
-        String d=fec_ini.charAt(0)+""+fec_ini.charAt(1);
+    
        
-        if(Integer.parseInt(m)<fecha.get(Calendar.MONTH)||(Integer.parseInt(m)==fecha.get(Calendar.MONTH)&&Integer.parseInt(d)<fecha.get(Calendar.DATE)))
-        {
-           return model.AgregarEstrategia(new Estrategia(bd,nombre,sql,fec_ini,1,freq,"","",fec_ini,dias));
-        }
-        else
-            return model.AgregarEstrategia(new Estrategia(bd,nombre,sql,fec_ini,0,freq,"","",fec_ini,dias));
-        
+        return model.AgregarEstrategia(new Estrategia(bd,nombre,sql,dias,freq,1,ini_rang,fin_rang,new Timestamp(fec_ini.getTime()),null,null,new Timestamp(fec_ini.getTime())));
     }
     
     public void ventanaEvidencia(String nom) throws SQLException

@@ -44,6 +44,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.LayoutManager;
 import static java.lang.Math.pow;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
@@ -66,8 +70,8 @@ public class FormEstrategias extends JFrame implements ActionListener  {
     private JPanel panel,pan_Tab,pan_fecha,principal,pan_job,pan_freq;
      private Button aceptar;
     private Control gestor;
-  private DefaultComboBoxModel dia,me,hor,min,sem,horIni,horFin,minIni,minFin;
-private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minuteFin;
+  private DefaultComboBoxModel dia,me,hor,min,sem,horIni,horFin,minIni,minFin,año;
+private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minuteFin,años;
 
   private  ArrayList<TableSpace> TaSpa;
   private DefaultTableModel model,model_sem;
@@ -97,7 +101,7 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
          minIni = new DefaultComboBoxModel();
          horFin = new DefaultComboBoxModel();
          minFin = new DefaultComboBoxModel();
-         
+          año = new DefaultComboBoxModel();
          query="backup database;";
          nombre=nom;
     }
@@ -263,13 +267,18 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
       pan_fecha.add(fecha,gc);
       
       gc.gridx=1;
-      gc.gridy=1;
+   
       JLabel dia_Ini=new JLabel("Dia");
       pan_fecha.add(dia_Ini,gc);
       
       gc.gridx=2;
       JLabel mes_Ini=new JLabel("Mes");
         pan_fecha.add(mes_Ini,gc);     
+        
+        gc.gridx=3;
+     mes_Ini=new JLabel("Año");
+        pan_fecha.add(mes_Ini,gc); 
+        
         
        for(int i=0;i<31;i++)
         {
@@ -283,7 +292,7 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
         }
         dias= new JComboBox(dia);
         gc.gridx=1;
-        gc.gridy=2;
+        gc.gridy=1;
         pan_fecha.add(dias,gc);
         
         for(int i=0;i<12;i++)
@@ -298,23 +307,33 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
         mes= new JComboBox(me);
          gc.gridx=2;
         pan_fecha.add(mes,gc);
+      
+      int ye=Calendar.getInstance().get(Calendar.YEAR);
+         for(int i=0;i<10;i++)
+        {
+           año.addElement(ye+i);
+           
+        }
+        años= new JComboBox(año);
+          gc.gridx=3;
+        pan_fecha.add(años,gc);
         
-         gc.gridx=3;
-       gc.gridy=0;
+         gc.gridx=0;
+       gc.gridy=2;
         fecha= new JLabel("Hora de inicio de la estrategia");
       pan_fecha.add(fecha,gc);
       
-      gc.gridx=4;
-      gc.gridy=1;
+      gc.gridx=1;
+      
        JLabel hora_Ini=new JLabel("Hora");
         pan_fecha.add(hora_Ini,gc);
         
-        gc.gridx=5;
+        gc.gridx=2;
         JLabel min_Ini=new JLabel("Minutos");
         pan_fecha.add(min_Ini,gc);
         
-         gc.gridx=4;
-        gc.gridy=2;
+         gc.gridx=1;
+        gc.gridy=3;
          for(int i=0;i<24;i++)
         {
             if(i<10)
@@ -327,7 +346,7 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
         hora= new JComboBox(hor);       
         pan_fecha.add(hora,gc);
         
-        gc.gridx=5;
+        gc.gridx=2;
           for(int i=0;i<60;i++)
         {
               if(i<10)
@@ -384,7 +403,7 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
            horIni.addElement(i);
         }
         horaIni= new JComboBox(horIni);       
-        pan_freq.add(hora,gc);
+        pan_freq.add(horaIni,gc);
         
         gc.gridx=2;
           for(int i=0;i<60;i++)
@@ -584,29 +603,26 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
                  }
                  else if(e.getActionCommand().equals("crear"))
                  {
-                     if(frecuencia.getText().equals(""))
+                     if(valida())
                      {
-                         JOptionPane.showMessageDialog(null, "Error no se envio el formulario, existe un campo vacio ", "Error", JOptionPane.ERROR_MESSAGE);
-                     }
-                     else
-                     {
+                    
                      if(!r_full.isSelected())
                      {
                          tablespaces();
                      }
-                     String fecha=dia.getSelectedItem().toString()+"/"+me.getSelectedItem()+" "+hor.getSelectedItem()+":"+min.getSelectedItem();
+                    
                      int freq= Integer.parseInt(frecuencia.getText());
-                         
-                         
-                     if(gestor.crearEstrategia(nombre, query,fecha,freq,dias()))
-                     {
-                             JOptionPane.showMessageDialog(null, "Estrategia creada correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
-           
-                     }
-                     else{
-                             JOptionPane.showMessageDialog(null, "Error al crear la estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
-           
-                     }
+                         System.out.println(proeje());
+                 
+//                     if(gestor.crearEstrategia(nombre, query,proeje(),freq,dias(),ini_rang(),fin_rang()))
+//                     {
+//                             JOptionPane.showMessageDialog(null, "Estrategia creada correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
+//           
+//                     }
+//                     else{
+//                             JOptionPane.showMessageDialog(null, "Error al crear la estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
+//           
+//                     }
                  }
                  }
                     
@@ -657,4 +673,101 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
         return dias;
     }
     
+    private int ini_rang()
+    {
+        return  Integer.parseInt(horIni.getSelectedItem().toString())*60+Integer.parseInt(minIni.getSelectedItem().toString());
+        
+    }
+    
+    private int fin_rang()
+    {
+      return  Integer.parseInt(horFin.getSelectedItem().toString())*60+Integer.parseInt(minFin.getSelectedItem().toString());
+    }
+        
+    private boolean valida()
+    {
+        boolean aux=true;
+          if(Integer.parseInt(año.getSelectedItem().toString())>Calendar.getInstance().get(Calendar.YEAR))
+        {
+         return aux;
+        }else
+      
+           if(Integer.parseInt(mes.getSelectedItem().toString())<Calendar.getInstance().get(Calendar.MONTH))
+        {
+          JOptionPane.showMessageDialog(null, "Error mes seleccionado ya paso", "ERROR", JOptionPane.ERROR_MESSAGE);
+          aux=false;
+        }else
+               if(Integer.parseInt(dia.getSelectedItem().toString())<Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
+        {
+          JOptionPane.showMessageDialog(null, "Error dia seleccionado ya paso", "ERROR", JOptionPane.ERROR_MESSAGE);
+          aux=false;
+        }else
+            if(Integer.parseInt(horaIni.getSelectedItem().toString())>Integer.parseInt(horaFin.getSelectedItem().toString()))
+        {
+          JOptionPane.showMessageDialog(null, "Error hora final del rango de backup es menor a la hora de inicio", "ERROR", JOptionPane.ERROR_MESSAGE);
+          aux=false;
+        }else
+            if(Integer.parseInt(horaIni.getSelectedItem().toString())==Integer.parseInt(horaFin.getSelectedItem().toString())&&Integer.parseInt(minIni.getSelectedItem().toString())>Integer.parseInt(minFin.getSelectedItem().toString()))
+        {
+          JOptionPane.showMessageDialog(null, "Error los minutos finales del rango de backup es menor a la hora de inicio", "ERROR", JOptionPane.ERROR_MESSAGE);
+          aux=false;
+        }
+         if(frecuencia.getText().equals(""))
+                     {
+                         JOptionPane.showMessageDialog(null, "Error no se envio el formulario, existe un campo vacio ", "Error", JOptionPane.ERROR_MESSAGE);
+                     }
+        return aux;
+    }
+    private Date proeje()
+    {
+        Date re=null;
+    
+           if(Integer.parseInt(dia.getSelectedItem().toString())==Calendar.getInstance().get(Calendar.DAY_OF_MONTH)&&Integer.parseInt(mes.getSelectedItem().toString())-1==Calendar.getInstance().get(Calendar.MONTH))
+        {
+            Calendar aux= Calendar.getInstance();
+            aux.add(Calendar.MINUTE,5);
+            System.out.println(Integer.parseInt(horaFin.getSelectedItem().toString()));
+            System.out.println(aux.get(Calendar.HOUR_OF_DAY));
+            if(Integer.parseInt(horaFin.getSelectedItem().toString())>aux.get(Calendar.HOUR_OF_DAY))
+            {
+               re= Calendar.getInstance().getTime();
+            }
+            else
+            {int i=0;
+            int opc=Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+            while(i<7)
+            {
+                if(opc>6)
+                {
+                    opc=0;
+                }
+           
+                    if(tab_sem.getValueAt(opc, 1).toString().equals("true"))
+                    {
+                        Calendar aux2= Calendar.getInstance();
+                        aux2.add(Calendar.DAY_OF_YEAR, opc);
+                        aux2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horIni.getSelectedItem().toString()));
+                        aux2.set(Calendar.MINUTE,Integer.parseInt(minIni.getSelectedItem().toString()));
+                       re =aux2.getTime();
+                    }
+                    i++;
+                    opc++;
+                
+            }
+           
+        }
+        }
+           else
+           {
+                Calendar  fec= Calendar.getInstance();
+                     fec.set(Calendar.DAY_OF_MONTH,Integer.parseInt(dia.getSelectedItem().toString()));
+                     fec.set(Calendar.MONTH,Integer.parseInt(me.getSelectedItem().toString())-1);
+                     fec.set(Calendar.YEAR,Integer.parseInt(año.getSelectedItem().toString()));// agregar
+                     fec.set(Calendar.HOUR_OF_DAY,Integer.parseInt(hor.getSelectedItem().toString()));
+                     fec.set(Calendar.MINUTE,Integer.parseInt(min.getSelectedItem().toString()));
+                     re= fec.getTime();
+           }
+        
+        return re;
+    }
 }
