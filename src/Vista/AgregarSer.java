@@ -28,7 +28,7 @@ import javax.swing.JTextField;
  */
 public class AgregarSer extends JFrame implements ActionListener {
     Control gestor;
-    JTextField ip,nombre,puerto,user,password;
+    JTextField ip,nombre,puerto;
     public AgregarSer(Control ges) {
          super("Crear Server");
         gestor=ges;
@@ -62,21 +62,6 @@ public class AgregarSer extends JFrame implements ActionListener {
      gc.gridx=1;
     puerto= new JTextField(10);
      principal.add(puerto,gc);
-      gc.gridx=0;
-    gc.gridy=3;
-    add= new JLabel("Digite el Usuario del Servidor: ");
-     principal.add(add,gc);
-          gc.gridx=1;
-    user= new JTextField(10);
-     principal.add(user,gc);
-       gc.gridx=0;
-    gc.gridy=4;
-    add= new JLabel("Digite el Password del Servidor: ");
-     principal.add(add,gc);
-          gc.gridx=1;
-    password= new JTextField(10);
-     principal.add(password,gc);
-    
     JPanel botones= new JPanel();
     JButton agregar= new JButton("agregar");
     agregar.addActionListener(this);
@@ -111,7 +96,7 @@ public class AgregarSer extends JFrame implements ActionListener {
            
             if(!blanco())
             {
-                 boolean aux= gestor.createDBLINK(nombre.getText(), user.getText(),password.getText(),ip.getText(),puerto.getText());
+                 boolean aux= gestor.createDBLINK(nombre.getText(),"","",ip.getText(),puerto.getText());
             if(!aux)
             {
                 JOptionPane.showMessageDialog(null, "Error al crear el database link ", "Error", JOptionPane.ERROR_MESSAGE);
@@ -133,8 +118,6 @@ public class AgregarSer extends JFrame implements ActionListener {
     private void limpiar()
     {
         nombre.setText("");
-        user.setText("");
-        password.setText("");
         ip.setText("");
         puerto.setText("");
     }
@@ -145,14 +128,7 @@ public class AgregarSer extends JFrame implements ActionListener {
         {
             return true;
         }
-        else if(user.getText().equals(""))
-        {
-            return true;
-        }
-        else if(password.getText().equals(""))
-        {
-            return true;
-        }
+       
         else if(ip.getText().equals(""))
         {
             return true;

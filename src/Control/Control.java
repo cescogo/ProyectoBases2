@@ -77,7 +77,7 @@ public class Control {
     
     public boolean createDBLINK(String name,String user,String password,String ip,String port)
     {
-        return model.createDBLINK(new DBLINK(name,user,password,ip,port));
+        return model.createDBLINK(new DBLINK(name,"","",ip,port));
     }
     
     public ArrayList<DBLINK> getdblink() throws SQLException
