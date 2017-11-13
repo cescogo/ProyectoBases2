@@ -69,6 +69,8 @@ public class Evidencias extends JFrame implements ActionListener, MouseListener 
         area.setEditable(false);
         area.setVisible(false);
         area.setFont (area.getFont().deriveFont ( 20f ));
+        area.setLineWrap(true); 
+        area.setWrapStyleWord(true); 
         JScrollPane log = new JScrollPane(area);
         central.add(BorderLayout.EAST,log);
         

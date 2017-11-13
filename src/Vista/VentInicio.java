@@ -77,7 +77,7 @@ ta.addMouseListener(this);
          
          ta.setModel(model);
          model.addColumn("DBLINK");
-         model.addColumn("Modificar/Eliminar");
+         model.addColumn("Eliminar");
            for (int i = 0; i < dblinks.size(); i++) {
           String aux=dblinks.get(i).getName();
             model.addRow(new Object[]{aux,false});               
@@ -91,12 +91,11 @@ ta.addMouseListener(this);
         JPanel botones = new JPanel();
         JButton agregar= new JButton("agregar");
         agregar.addActionListener(this);
-            JButton modificar= new JButton("modificar");
-        modificar.addActionListener(this);
+    
             JButton eliminar= new JButton("eliminar");
         eliminar.addActionListener(this);
         botones.add(agregar,BorderLayout.CENTER);
-        botones.add(modificar,BorderLayout.CENTER);
+      
         botones.add(eliminar,BorderLayout.CENTER);
         // content pane///
         add(pan_dblink,BorderLayout.CENTER);
