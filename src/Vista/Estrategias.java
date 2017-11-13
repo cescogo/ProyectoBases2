@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -156,9 +157,16 @@ public class Estrategias extends JFrame implements ActionListener, MouseListener
         {
             
             try {
-                this.dispose();
-            gestor.modificarEstrategia(nombre,gesEstrategia());
-                gestor.ventanaEstrategias(nombre);
+                
+            if(gestor.modificarEstrategia(nombre,gesEstrategia()))
+            {this.dispose();
+                    JOptionPane.showMessageDialog(null, "Estrategia modificada correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
+           gestor.ventanaEstrategias(nombre);
+            }
+            else
+                JOptionPane.showMessageDialog(null, "error al modificar la estrategia ", "Error", JOptionPane.ERROR_MESSAGE);
+                
+                
             } catch (InterruptedException ex) {
                 Logger.getLogger(Estrategias.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {

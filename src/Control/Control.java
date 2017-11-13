@@ -113,7 +113,7 @@ public class Control {
     
     public void ventanaEvidencia(String nom,String evidencia) throws SQLException
     {
-        Evidencias eviden= new Evidencias(this,nom);
+        Evidencias eviden= new Evidencias(this,nom,model.getEvidencias(evidencia));
         eviden.iniciar();
     }
     public boolean modificarEstrategia(String bd,String name)

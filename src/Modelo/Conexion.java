@@ -301,7 +301,7 @@ public class Conexion {
       ArrayList<Evidencia> vec= new ArrayList<>();
         try {
             stm = conexion.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM evidencias where nombre=='"+nombre+" '");
+            ResultSet rs = stm.executeQuery("SELECT * FROM evidencias where nombre='"+nombre+"'");
 
             getColumnNames(rs);
             while (rs.next()) {
