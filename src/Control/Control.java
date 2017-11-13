@@ -111,9 +111,18 @@ public class Control {
         return model.AgregarEstrategia(new Estrategia(bd,nombre,sql,dias,freq,1,ini_rang,fin_rang,new Timestamp(fec_ini.getTime()),null,null,new Timestamp(fec_ini.getTime())));
     }
     
-    public void ventanaEvidencia(String nom) throws SQLException
+    public void ventanaEvidencia(String nom,String evidencia) throws SQLException
     {
         Evidencias eviden= new Evidencias(this,nom);
         eviden.iniciar();
+    }
+    public boolean modificarEstrategia(String bd,String name)
+    {
+        if(model.valorEstado(name)==1)
+        {
+           return  model.eliminarEstrategia(name, bd, 0);
+        }
+        else
+            return model.eliminarEstrategia(name, bd, 1);
     }
 }

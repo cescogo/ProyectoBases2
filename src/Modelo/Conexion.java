@@ -296,6 +296,109 @@ public class Conexion {
         return vec;
     }
     
+      public ArrayList<Evidencia> getEvidencias(String nombre) throws SQLException
+      {Statement stm = null;
+      ArrayList<Evidencia> vec= new ArrayList<>();
+        try {
+            stm = conexion.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT * FROM evidencias where nombre=='"+nombre+" '");
+
+            getColumnNames(rs);
+            while (rs.next()) {
+
+                //Aqui deberia jalar el nombre de la columna
+                vec.add(new Evidencia(rs.getString("nombre"),rs.getString("evidencia"),rs.getTimestamp("inicio"),rs.getTimestamp("termino")));
+
+            }
+            stm.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+        }
+        return vec;
+      }
+      
+      public boolean eliminarEstrategia(String nombre,String bd, int val)
+      {
+           Statement stm = null;
+
+        try { 
+           if(eliminaEstrategia(nombre,bd,val))
+        {
+            stm = conexion.createStatement();
+            String st="Update estrategias set estado="+val+" where nombre='"+nombre+"'";
+            stm.execute(st);
+
+         stm.close();
+         return true;
+        }
+           else
+        return false;
+        }
+        
+   
+        catch ( SQLException e ) {
+       System.out.println(e.getMessage());
+         return false;
+         
+      }catch (Exception e)
+      {
+          System.out.println(e.getMessage());
+         return false;
+      }
+      }
+      
+      private boolean eliminaEstrategia(String nombre,String bd, int val)
+      {
+           Statement stm = null;
+        
+        try {   
+            stm = conexion.createStatement();
+            String st="Update sede.estrategias@"+bd+"set estado="+val+" where nombre='"+nombre+"'";
+            stm.execute(st);
+
+         stm.close();
+         return true;
+   }catch ( SQLException e ) {
+       System.out.println(e.getMessage());
+         return false;
+         
+      }catch (Exception e)
+      {
+          System.out.println(e.getMessage());
+         return false;
+      }
+      }
+      
+      public int valorEstado(String nombre)
+    {
+        
+        int count=0;
+         Statement stm = null;
+        try {
+            stm = conexion.createStatement();
+            ResultSet rs = stm.executeQuery("select estado from estrategias where nombre='"+nombre+"'");
+           getColumnNames(rs);
+           rs.next();
+           count=rs.getInt("estado");
+
+         stm.close();
+     
+   }catch ( SQLException e ) {
+       System.out.println(e.getMessage());
+         
+         
+      }catch (Exception e)
+      {
+          System.out.println(e.getMessage());
+         
+      }
+        return count;
+    }
+
     /*Devuelve columna*/
     public static void getColumnNames(ResultSet rs) throws SQLException {
         if (rs == null) {

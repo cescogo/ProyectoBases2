@@ -614,15 +614,15 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
                      int freq= Integer.parseInt(frecuencia.getText());
                          System.out.println(proeje());
                  
-//                     if(gestor.crearEstrategia(nombre, query,proeje(),freq,dias(),ini_rang(),fin_rang()))
-//                     {
-//                             JOptionPane.showMessageDialog(null, "Estrategia creada correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
-//           
-//                     }
-//                     else{
-//                             JOptionPane.showMessageDialog(null, "Error al crear la estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
-//           
-//                     }
+                     if(gestor.crearEstrategia(nombre, query,proeje(),freq,dias(),ini_rang(),fin_rang()))
+                     {
+                             JOptionPane.showMessageDialog(null, "Estrategia creada correctamente", "Aceptado", JOptionPane.INFORMATION_MESSAGE);
+           
+                     }
+                     else{
+                             JOptionPane.showMessageDialog(null, "Error al crear la estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
+           
+                     }
                  }
                  }
                     
