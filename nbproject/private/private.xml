@@ -5,15 +5,15 @@
             <url>src/Vista/AgregarSer.java</url>
             <bookmark id="1">
                 <name/>
-                <line>83</line>
+                <line>86</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/cesar/Desktop/ProyectoBases2/src/Modelo/Conexion.java</file>
-            <file>file:/C:/Users/cesar/Desktop/ProyectoBases2/src/Control/Control.java</file>
+            <file>file:/C:/Users/cesar/Desktop/ProyectoBases2/src/Vista/Estrategias.java</file>
+            <file>file:/C:/Users/cesar/Desktop/ProyectoBases2/src/Vista/FormEstrategias.java</file>
             <file>file:/C:/Users/cesar/Desktop/ProyectoBases2/src/Vista/AgregarSer.java</file>
         </group>
     </open-files>

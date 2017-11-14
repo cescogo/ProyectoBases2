@@ -100,7 +100,10 @@ ta.addMouseListener(this);
         // content pane///
         add(pan_dblink,BorderLayout.CENTER);
           add(botones,BorderLayout.SOUTH);
-      this.setExtendedState(MAXIMIZED_BOTH);
+        
+          this.setMinimumSize(new Dimension(1200,700));
+      
+        this.setExtendedState(MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

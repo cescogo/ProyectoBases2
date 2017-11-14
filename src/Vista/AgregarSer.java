@@ -7,6 +7,7 @@ package Vista;
 
 import Control.Control;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -73,7 +74,9 @@ public class AgregarSer extends JFrame implements ActionListener {
     botones.add(agregar,BorderLayout.CENTER);
           add(principal,BorderLayout.CENTER);
           add(botones,BorderLayout.SOUTH);
+        this.setResizable(false);
       this.setExtendedState(MAXIMIZED_BOTH);
+    this.setMinimumSize(new Dimension(1200,700));
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

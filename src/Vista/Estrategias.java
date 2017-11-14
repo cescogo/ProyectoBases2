@@ -10,6 +10,7 @@ import Modelo.Estrategia;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -123,6 +124,7 @@ public class Estrategias extends JFrame implements ActionListener, MouseListener
         add(arriba,BorderLayout.CENTER);
         add(botones,BorderLayout.SOUTH);
         this.setExtendedState(MAXIMIZED_BOTH);
+        this.setMinimumSize(new Dimension(1200,700));
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

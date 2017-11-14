@@ -543,6 +543,7 @@ private  JComboBox dias,mes,hora,minute,semana,horaIni, horaFin,minuteIni,minute
         ////ventana principal/////
         add(principal,BorderLayout.CENTER);
       this.setExtendedState(MAXIMIZED_BOTH);
+      this.setMinimumSize(new Dimension(1200,700));
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
